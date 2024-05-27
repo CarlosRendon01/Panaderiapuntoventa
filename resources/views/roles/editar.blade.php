@@ -1,5 +1,5 @@
 @extends('layouts.app')
-{{
+
 @section('content')
 <section class="section" style="background-color: #e0e0eb; min-height: 100vh; display: flex; align-items: center;">
     <div class="container custom-container">
@@ -237,5 +237,5 @@
         color: #350707;
     }
 </style>
-}}
+
 @endsection

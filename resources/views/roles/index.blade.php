@@ -1,5 +1,5 @@
 @extends('layouts.app')
-{{
+
 <style>
    #miTabla2 {
     font-family: 'Open Sans', sans-serif;
@@ -541,5 +541,5 @@
         });
     }
 </script>
-}}
+
 @endsection
