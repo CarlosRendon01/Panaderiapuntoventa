@@ -26,6 +26,7 @@ class Producto extends Model
         'precio',
         'cantidad',
         'materia_prima',
+        'cantidad_por_producto'
     ];
 
     // Define la relación con el modelo Pedido

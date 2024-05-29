@@ -477,9 +477,12 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             @can('crear-producto')
-                            <a class="btn btn-warning" href="{{ route('productos.create') }}">
-                                <i class="fas fa-plus"></i> Nuevo Producto
-                            </a>
+                            <div class="d-flex">
+                                <a class="btn btn-warning" href="{{ route('productos.create') }}">
+                                    <i class="fas fa-plus"></i> Nuevo Producto
+                                </a>
+                                <button type="button" class="btn btn-primary ml-2" onclick="mostrarModal()">Cargar</button>
+                            </div>
                             @endcan
                         </div>
 
@@ -500,29 +503,27 @@
                                     <td class="text-center">{{ $producto->descripcion }}</td>
                                     <td class="text-center">{{ $producto->precio }}</td>
                                     <td class="text-center">
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            <input type="number" id="cantidad-{{ $producto->id_producto }}" value="{{ $producto->cantidad }}" class="form-control text-center" style="width: 80px;" readonly>
-                                            <button type="button" class="btn btn-success ml-2" onclick="incrementarCantidad({{ $producto->id_producto }})">+</button>
-                                            <button type="button" class="btn btn-primary ml-2" onclick="cargarCantidad({{ $producto->id_producto }})">Cargar</button>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">{{ $producto->materia_prima }}</td> <!-- Mostrar materia prima -->
-                                    <td class="text-center">
-                                        @can('editar-productos')
-                                        <a href="{{ route('productos.edit', $producto->id_producto) }}"
-                                            class="btn btn-warning mr-1 css-button-sliding-to-left--yellow">
-                                            <i class="fas fa-edit"></i>
-                                            Editar
-                                        </a>
-                                        @endcan
-                                        @can('borrar-productos')
-                                        <button type="button" class="btn btn-danger css-button-sliding-to-left--red" onclick="confirmarEliminacion({{ $producto->id_producto }})">
-                                            <i class="fas fa-trash-alt"></i>
-                                            Eliminar
-                                        </button>
-                                        <form id="eliminar-form-{{ $producto->id_producto }}" action="{{ route('productos.destroy', $producto->id_producto) }}" method="POST" class="d-none">
-                                            @csrf
-                                            @method('DELETE')
+                
+                                    <input type="number" id="cantidad-{{ $producto->id_producto }}" value="{{ $producto->cantidad }}" class="form-control text-center" style="width: 80px;" readonly>
+            
+                                </td>
+            <td class="text-center" id="materia-prima-{{ $producto->id_producto }}">{{ $producto->materia_prima }}</td> <!-- Mostrar materia prima -->
+            <td class="text-center">
+                @can('editar-productos')
+                <a href="{{ route('productos.edit', $producto->id_producto) }}"
+                    class="btn btn-warning mr-1 css-button-sliding-to-left--yellow">
+                    <i class="fas fa-edit"></i>
+                    Editar
+                </a>
+                @endcan
+                @can('borrar-productos')
+                <button type="button" class="btn btn-danger css-button-sliding-to-left--red" onclick="confirmarEliminacion({{ $producto->id_producto }})">
+                    <i class="fas fa-trash-alt"></i>
+                    Eliminar
+                </button>
+                <form id="eliminar-form-{{ $producto->id_producto }}" action="{{ route('productos.destroy', $producto->id_producto) }}" method="POST" class="d-none">
+                    @csrf
+                    @method('DELETE')
                                         </form>
                                         @endcan
                                     </td>
@@ -585,12 +586,45 @@
     </div>
 </section>
 
+<!-- Modal para Cargar Cantidad -->
+<div class="modal fade" id="modalCargar" tabindex="-1" role="dialog" aria-labelledby="modalCargarLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCargarLabel">Cargar Cantidad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formCargarCantidad">
+                    <div class="form-group">
+                        <label for="productoSelect">Producto</label>
+                        <select class="form-control" id="productoSelect" required>
+                            <option value="">Selecciona un producto</option>
+                            @foreach ($productos as $producto)
+                            <option value="{{ $producto->id_producto }}">{{ $producto->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidadInput">Cantidad</label>
+                        <input type="number" class="form-control" id="cantidadInput" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <!-- DATATABLES -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <!-- BOOTSTRAP -->
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script>
     new DataTable('#miTabla2', {
@@ -616,67 +650,96 @@
             pageLength: 10
         });
 
-        function incrementarCantidad(id) {
-    let cantidadInput = document.getElementById('cantidad-' + id);
-    cantidadInput.value = parseInt(cantidadInput.value) + 1;
-}
+    function mostrarModal() {
+        $('#modalCargar').modal('show');
+    }
 
-function cargarCantidad(id) {
-    let cantidadInput = document.getElementById('cantidad-' + id);
-    let nuevaCantidad = cantidadInput.value;
-    // Aquí puedes hacer una llamada AJAX para actualizar la cantidad en el servidor
-    $.ajax({
-        url: '{{ route('productos.updateCantidad', '') }}/' + id,
-        method: 'POST',
-        data: {
-            cantidad: nuevaCantidad,
-            _token: '{{ csrf_token() }}'
-        },
-        success: function(response) {
-            Swal.fire({
-                title: 'Cantidad Actualizada',
-                text: 'La cantidad ha sido actualizada correctamente.',
-                icon: 'success',
-                timer: 2000,
-                showConfirmButton: false
+    $('#formCargarCantidad').on('submit', function(e) {
+        e.preventDefault();
+        let productoId = $('#productoSelect').val();
+        let cantidad = parseInt($('#cantidadInput').val()); // Convertir a entero
+        
+        if (productoId && cantidad > 0) {
+            // Aquí puedes hacer una llamada AJAX para actualizar la cantidad en el servidor
+            $.ajax({
+                url: '{{ route('productos.updateCantidad', '') }}/' + productoId,
+                method: 'POST',
+                data: {
+                    cantidad: cantidad,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if(response.success) {
+                        Swal.fire({
+                            title: 'Cantidad Actualizada',
+                            text: 'La cantidad ha sido actualizada correctamente.',
+                            icon: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        // Actualiza la cantidad en la tabla sumando la cantidad ingresada
+                        let currentQuantity = parseInt($('#cantidad-' + productoId).val());
+                        $('#cantidad-' + productoId).val(currentQuantity + cantidad);
+                        $('#modalCargar').modal('hide');
+                        // Actualiza la cantidad de materia prima en la vista de materia prima
+                        let materiaPrimaId = $('#materia-prima-' + productoId).data('materia-prima-id');
+                        $('#materia-prima-' + materiaPrimaId).text(response.materia_prima);
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.message,
+                            icon: 'error',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    }
+                },
+                error: function(error) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Hubo un error al actualizar la cantidad.',
+                        icon: 'error',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                }
             });
-        },
-        error: function(error) {
+        } else {
             Swal.fire({
                 title: 'Error',
-                text: 'Hubo un error al actualizar la cantidad.',
+                text: 'Por favor selecciona un producto y una cantidad válida.',
                 icon: 'error',
                 timer: 2000,
                 showConfirmButton: false
             });
         }
     });
-}
 
-function confirmarEliminacion(id_producto) {
-    Swal.fire({
-        title: '¿Estás seguro?',
-        text: "¡No podrás revertir esto!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, eliminarlo'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            document.getElementById('eliminar-form-' + id_producto).submit();
-            Swal.fire({
-                title: 'Eliminado!',
-                text: 'El producto ha sido eliminado correctamente.',
-                icon: 'success',
-                timer: 4000, // Duración en milisegundos
-                showConfirmButton: false
-            });
-        }
-    });
-}
+    function confirmarEliminacion(id_producto) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminarlo'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('eliminar-form-' + id_producto).submit();
+                Swal.fire({
+                    title: 'Eliminado!',
+                    text: 'El producto ha sido eliminado correctamente.',
+                    icon: 'success',
+                    timer: 4000, // Duración en milisegundos
+                    showConfirmButton: false
+                });
+            }
+        });
+    }
 </script>
 
 @endsection
+
 
 

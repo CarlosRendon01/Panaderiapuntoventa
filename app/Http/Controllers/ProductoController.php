@@ -119,7 +119,28 @@ class ProductoController extends Controller
         }
     }
 
+// ProductoController.php
 
+public function updateCantidad(Request $request, $id)
+{
+    $producto = Producto::findOrFail($id);
+    $materiaPrima = Materiaprima::findOrFail($producto->materia_prima_id); // Supongamos que cada producto tiene un ID de materia prima asociado
+    
+    // Calcula la cantidad necesaria de materia prima para la cantidad ingresada
+    $cantidadNecesaria = $request->input('cantidad') * $producto->cantidad_por_producto;
+
+    if ($materiaPrima->cantidad >= $cantidadNecesaria) {
+        $producto->cantidad += $request->input('cantidad');
+        $materiaPrima->cantidad -= $cantidadNecesaria;
+
+        $producto->save();
+        $materiaPrima->save();
+
+        return response()->json(['success' => true, 'cantidad' => $producto->cantidad, 'materia_prima' => $materiaPrima->cantidad]);
+    } else {
+        return response()->json(['success' => false, 'message' => 'No hay suficiente materia prima disponible.']);
+    }
+}
     public function destroy($id_producto)
     {
         try {

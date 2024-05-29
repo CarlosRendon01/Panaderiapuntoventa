@@ -35,7 +35,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('puntoventas', PuntoventaController::class);
     // routes/web.php
 
-Route::post('/productos/actualizar-cantidad/{id}', [ProductoController::class, 'updateCantidad'])->name('productos.updateCantidad');
+    Route::post('/productos/updateCantidad/{id}', [ProductoController::class, 'updateCantidad'])->name('productos.updateCantidad');
 
     Route::resource('logs', LogController::class);
     //Route::get('/grupos/{clave}/generarPDF', [GrupoController::class, 'generarPDF'])->name('grupos.generarPDF');
