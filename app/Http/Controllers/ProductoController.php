@@ -32,10 +32,12 @@ class ProductoController extends Controller
             'cantidad' => 'required|integer',
             'materias_primas' => 'required|array',
             'cantidades' => 'required|array',
+            'cantidades.*' => 'integer|min:0',
         ]);
     
+        // Crear una descripción de las materias primas
         $materiasPrimasDescripcion = '';
-    
+
         foreach ($request->materias_primas as $index => $materia_prima_id) {
             $cantidad = $request->cantidades[$index];
             $materiaPrima = Materiaprima::findOrFail($materia_prima_id);
@@ -46,23 +48,17 @@ class ProductoController extends Controller
             $materiasPrimasDescripcion = rtrim($materiasPrimasDescripcion, ', ');
         }
     
-        $producto = Producto::create([
+        // Crear el producto con la descripción de materias primas
+        Producto::create([
             'nombre' => $request->nombre,
             'descripcion' => $request->descripcion,
             'precio' => $request->precio,
             'cantidad' => $request->cantidad,
             'materia_prima' => $materiasPrimasDescripcion
         ]);
-    
-        foreach ($request->materias_primas as $index => $materia_prima_id) {
-            $cantidad = $request->cantidades[$index];
-            $materiaPrima = Materiaprima::findOrFail($materia_prima_id);
-            $materiaPrima->cantidad -= $cantidad;
-            $materiaPrima->save();
-    
-            $producto->materiasPrimas()->attach($materia_prima_id, ['cantidad' => $cantidad]);
-        }
-    
+
+
+
         return redirect()->route('productos.index')->with('success', 'Producto creado exitosamente.');
     }
 
@@ -91,6 +87,7 @@ class ProductoController extends Controller
             'cantidad' => 'required|integer',
             'materias_primas' => 'required|array',
             'cantidades' => 'required|array',
+            'cantidades.*' => 'integer|min:0',
         ]);
 
         DB::beginTransaction();

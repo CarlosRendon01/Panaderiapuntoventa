@@ -94,7 +94,7 @@
                                                 <option value="{{ $materiaPrima->id_materiaprima }}">{{ $materiaPrima->nombre }}</option>
                                             @endforeach
                                         </select>
-                                        <input type="number" class="form-control materia-prima-quantity" placeholder="Cantidad">
+                                        <input type="number" class="form-control materia-prima-quantity" placeholder="Cantidad" min="0" step="1" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                         <button type="button" class="btn btn-success btn-sm add-materia-prima">Agregar</button>
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@ $(document).ready(function() {
         let selectedMateriaPrimaId = $(this).siblings('.materia-prima-select').val();
         let selectedCantidad = $(this).siblings('.materia-prima-quantity').val();
 
-        if (selectedMateriaPrima && selectedCantidad) {
+        if (selectedMateriaPrima && selectedCantidad && selectedCantidad % 1 === 0) {
             let existingMateriaPrima = $(`#materiaPrimaInfo input[name="materias_primas[]"][value="${selectedMateriaPrimaId}"]`).closest('.card');
 
             if (existingMateriaPrima.length > 0) {
@@ -153,6 +153,8 @@ $(document).ready(function() {
             // Resetear los campos del formulario de materia prima
             $(this).siblings('.materia-prima-select').val('').trigger('change');
             $(this).siblings('.materia-prima-quantity').val('');
+        } else {
+            alert('Por favor ingrese una cantidad válida.');
         }
     });
 
