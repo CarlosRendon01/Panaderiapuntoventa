@@ -3,61 +3,85 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
+use App\Models\Materiaprima; 
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
-    // Muestra una lista de productos
+
     public function index()
     {
         $productos = Producto::paginate(10);
         return view('productos.index', compact('productos'));
     }
 
-    // Muestra el formulario para crear un nuevo producto
+
     public function create()
     {
-        return view('productos.crear');
+        $materiasPrimas = Materiaprima::all();
+        return view('productos.crear', compact('materiasPrimas'));
     }
 
-    // Almacena un nuevo producto en la base de datos
+
     public function store(Request $request)
     {
         $request->validate([
             'nombre' => 'required',
             'descripcion' => 'required',
-            'precio' => 'required|numeric',
+            'precio' => 'required|numeric|between:0,9999.99',
             'cantidad' => 'required|integer',
+            'materias_primas' => 'required|array',
+            'cantidades' => 'required|array',
         ]);
-
-        $producto = Producto::create($request->all());
-
-        // Verifica si $producto->id_producto es null
-        if ($producto->id_producto === null) {
-            throw new \Exception('Error: id_producto is null in store method');
+    
+        $materiasPrimasDescripcion = '';
+    
+        foreach ($request->materias_primas as $index => $materia_prima_id) {
+            $cantidad = $request->cantidades[$index];
+            $materiaPrima = Materiaprima::findOrFail($materia_prima_id);
+            $materiasPrimasDescripcion .= $materiaPrima->nombre . ': ' . $cantidad . ', ';
         }
-
-        // Log the action
-       
-
+    
+        if ($materiasPrimasDescripcion !== '') {
+            $materiasPrimasDescripcion = rtrim($materiasPrimasDescripcion, ', ');
+        }
+    
+        $producto = Producto::create([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'precio' => $request->precio,
+            'cantidad' => $request->cantidad,
+            'materia_prima' => $materiasPrimasDescripcion
+        ]);
+    
+        foreach ($request->materias_primas as $index => $materia_prima_id) {
+            $cantidad = $request->cantidades[$index];
+            $materiaPrima = Materiaprima::findOrFail($materia_prima_id);
+            $materiaPrima->cantidad -= $cantidad;
+            $materiaPrima->save();
+    
+            $producto->materiasPrimas()->attach($materia_prima_id, ['cantidad' => $cantidad]);
+        }
+    
         return redirect()->route('productos.index')->with('success', 'Producto creado exitosamente.');
     }
 
-    // Muestra un producto específico
+
     public function show($id_producto)
     {
         $producto = Producto::findOrFail($id_producto);
         return view('productos.show', compact('producto'));
     }
 
-    // Muestra el formulario para editar un producto existente
+
     public function edit($id_producto)
     {
         $producto = Producto::findOrFail($id_producto);
-        return view('productos.editar', compact('producto'));
+        $materiasPrimas = Materiaprima::all();
+        return view('productos.editar', compact('producto', 'materiasPrimas'));
     }
 
-    // Actualiza un producto existente en la base de datos
+
     public function update(Request $request, $id_producto)
     {
         $request->validate([
@@ -65,42 +89,49 @@ class ProductoController extends Controller
             'descripcion' => 'required',
             'precio' => 'required|numeric',
             'cantidad' => 'required|integer',
+            'materias_primas' => 'required|array',
+            'cantidades' => 'required|array',
         ]);
 
-        $producto = Producto::findOrFail($id_producto);
-        $producto->update($request->all());
+        DB::beginTransaction();
+        try {
+            $producto = Producto::findOrFail($id_producto);
+            $producto->update($request->only('nombre', 'descripcion', 'precio', 'cantidad'));
+            $producto->materiasPrimas()->detach();
 
-        // Verifica si $producto->id_producto es null
-        if ($producto->id_producto === null) {
-            throw new \Exception('Error: id_producto is null in update method');
+            foreach ($request->materias_primas as $index => $materia_prima_id) {
+                $cantidad = $request->cantidades[$index];
+                $materiaPrima = Materiaprima::findOrFail($materia_prima_id);
+                
+                if ($materiaPrima->cantidad < $cantidad) {
+                    throw new \Exception('Cantidad insuficiente de materia prima: ' . $materiaPrima->nombre);
+                }
+
+                $materiaPrima->cantidad -= $cantidad;
+                $materiaPrima->save();
+
+                $producto->materiasPrimas()->attach($materia_prima_id, ['cantidad' => $cantidad]);
+            }
+
+            DB::commit();
+            return redirect()->route('productos.index')->with('success', 'Producto actualizado exitosamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error actualizando producto: ' . $e->getMessage());
+            return redirect()->back()->withErrors(['error' => 'Error actualizando producto: ' . $e->getMessage()]);
         }
-
-        // Log the action
-        $executedSQL = "UPDATE productos SET id_producto = '{$producto->id_producto}', nombre = '{$producto->nombre}', descripcion = '{$producto->descripcion}', precio = '{$producto->precio}', cantidad = '{$producto->cantidad}', created_at = '{$producto->created_at}', updated_at = '{$producto->updated_at}' WHERE id_producto = '{$producto->id_producto}'";
-        $reverseSQL = "UPDATE productos SET id_producto = '{$producto->id_producto}', nombre = '{$producto->getOriginal('nombre')}', descripcion = '{$producto->getOriginal('descripcion')}', precio = '{$producto->getOriginal('precio')}', cantidad = '{$producto->getOriginal('cantidad')}', created_at = '{$producto->getOriginal('created_at')}', updated_at = '{$producto->getOriginal('updated_at')}' WHERE id_producto = '{$producto->id_producto}'";
-        
-       
-
-        return redirect()->route('productos.index')->with('success', 'Producto actualizado exitosamente.');
     }
 
-    // Elimina un producto de la base de datos
+
     public function destroy($id_producto)
     {
-        $producto = Producto::findOrFail($id_producto);
-        $producto->delete();
-
-        // Verifica si $producto->id_producto es null
-        if ($producto->id_producto === null) {
-            throw new \Exception('Error: id_producto is null in destroy method');
+        try {
+            $producto = Producto::findOrFail($id_producto);
+            $producto->delete();
+            return redirect()->route('productos.index')->with('success', 'Producto eliminado exitosamente.');
+        } catch (\Exception $e) {
+            Log::error('Error eliminando producto: ' . $e->getMessage());
+            return redirect()->back()->withErrors(['error' => 'Error eliminando producto: ' . $e->getMessage()]);
         }
-
-        // Log the action
-      
-
-        return redirect()->route('productos.index')->with('success', 'Producto eliminado exitosamente.');
     }
-
-    // Función para registrar las acciones
-   
 }

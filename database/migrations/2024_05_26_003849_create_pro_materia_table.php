@@ -14,12 +14,11 @@ class CreateProMateriaTable extends Migration
     public function up()
     {
         Schema::create('pro_materia', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('id_materiaprima');
-            $table->unsignedBigInteger('id_producto');
-            $table->foreign('id_materiaprima')->references('id_materiaprima')->on('materiaprimas')->onDelete('cascade');
-            $table->foreign('id_producto')->references('id_producto')->on('productos')->onDelete('cascade');
-            $table->timestamps();
+            $table->id(); // Define una clave primaria automática
+            $table->foreignId('id_producto')->constrained('productos','id_producto')->onDelete('cascade'); // Clave foránea para producto
+            $table->foreignId('id_materiaprima')->constrained('materiaprimas', 'id_materiaprima')->onDelete('cascade'); // Clave foránea para materia prima
+            $table->integer('cantidad');
+            $table->timestamps(); // Define los campos created_at y updated_at
         });
     }
 

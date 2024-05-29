@@ -489,6 +489,7 @@
                                 <th style="color:#fff;" class="text-center">Descripcion</th>
                                 <th style="color:#fff;" class="text-center">Precio</th>
                                 <th style="color:#fff;" class="text-center">Cantidad</th>
+                                <th style="color:#fff;" class="text-center">Materia Prima</th>
                                 <th style="color:#fff;" class="text-center">Acciones</th>
                             </thead>
 
@@ -498,7 +499,14 @@
                                     <td class="text-center">{{ $producto->nombre }}</td>
                                     <td class="text-center">{{ $producto->descripcion }}</td>
                                     <td class="text-center">{{ $producto->precio }}</td>
-                                    <td class="text-center">{{ $producto->cantidad }}</td>
+                                    <td class="text-center">
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <input type="number" id="cantidad-{{ $producto->id_producto }}" value="{{ $producto->cantidad }}" class="form-control text-center" style="width: 80px;" readonly>
+                                            <button type="button" class="btn btn-success ml-2" onclick="incrementarCantidad({{ $producto->id_producto }})">+</button>
+                                            <button type="button" class="btn btn-primary ml-2" onclick="cargarCantidad({{ $producto->id_producto }})">Cargar</button>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">{{ $producto->materia_prima }}</td> <!-- Mostrar materia prima -->
                                     <td class="text-center">
                                         @can('editar-productos')
                                         <a href="{{ route('productos.edit', $producto->id_producto) }}"
@@ -595,6 +603,7 @@
                 { descripcion: 'Descripcion' },
                 { precio: 'Precio' },
                 { cantidad: 'Cantidad' },
+                { materia_prima: 'Materia Prima' },
                 { Acciones: 'Acciones' },
             ],
             language: {
@@ -606,6 +615,43 @@
             dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
             pageLength: 10
         });
+
+        function incrementarCantidad(id) {
+    let cantidadInput = document.getElementById('cantidad-' + id);
+    cantidadInput.value = parseInt(cantidadInput.value) + 1;
+}
+
+function cargarCantidad(id) {
+    let cantidadInput = document.getElementById('cantidad-' + id);
+    let nuevaCantidad = cantidadInput.value;
+    // Aquí puedes hacer una llamada AJAX para actualizar la cantidad en el servidor
+    $.ajax({
+        url: '{{ route('productos.updateCantidad', '') }}/' + id,
+        method: 'POST',
+        data: {
+            cantidad: nuevaCantidad,
+            _token: '{{ csrf_token() }}'
+        },
+        success: function(response) {
+            Swal.fire({
+                title: 'Cantidad Actualizada',
+                text: 'La cantidad ha sido actualizada correctamente.',
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        },
+        error: function(error) {
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un error al actualizar la cantidad.',
+                icon: 'error',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+    });
+}
 
 function confirmarEliminacion(id_producto) {
     Swal.fire({

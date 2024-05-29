@@ -42,7 +42,7 @@
         }
     
         .main-navbar:hover {
-            background: linear-gradient(to right, #332f6c, #20204b);
+            background: linear-gradient(to right, #AF8F6F, #AF8F6F);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
         }
     

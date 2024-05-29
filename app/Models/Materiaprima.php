@@ -12,7 +12,7 @@ class Materiaprima extends Model
     // Especifica el nombre de la tabla si no sigue la convención de nombres de Laravel
     protected $table = 'materiaprimas';
 
-    // Desactiva los timestamps si tu tabla no tiene las columnas created_at y updated_at
+    // Activa los timestamps si tu tabla tiene las columnas created_at y updated_at
     public $timestamps = true;
 
     // Especifica la clave primaria si no es 'id'
@@ -20,17 +20,17 @@ class Materiaprima extends Model
 
     // Especifica qué campos pueden ser asignados masivamente
     protected $fillable = [
-        'id_materiaprima',
+        
         'nombre',
         'descripcion',
         'nombreproveedor',
         'cantidad',
-        'precio'
-        // Añadir este campo
+        'precio',
     ];
 
+    // Define la relación con el modelo Producto
     public function productos()
     {
-        return $this->belongsToMany(Producto::class, 'pro_materia', 'id_materiaprima', 'id_producto');
+        return $this->belongsToMany(Producto::class, 'pro_materia', 'id_materiaprima', 'id_producto')->withPivot('cantidad');
     }
 }
