@@ -6,7 +6,7 @@ use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\WelcomeController;
-use App\Http\Controllers\MateriaprimaController;
+use App\Http\Controllers\MateriaController;
 use App\Http\Controllers\PuntoventaController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LogController;
@@ -31,7 +31,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RolController::class);
     Route::resource('usuarios', UsuarioController::class);
     Route::resource('productos', ProductoController::class); 
-    Route::resource('materiaprimas', MateriaprimaController::class);
+    Route::resource('materias', MateriaController::class);
     Route::resource('puntoventas', PuntoventaController::class);
     // routes/web.php
 

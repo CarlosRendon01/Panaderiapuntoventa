@@ -480,7 +480,6 @@
     color: white;
 }
 </style>
-
 @section('content')
 <section class="section">
     <div class="section-header">
@@ -492,8 +491,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            @can('crear-materiaprima')
-                            <a class="btn btn-warning" href="{{ route('materiaprimas.create') }}">
+                            @can('crear-materia')
+                            <a class="btn btn-warning" href="{{ route('materias.create') }}">
                                 <i class="fas fa-plus"></i> Nuevo ingrediente
                             </a>
                             @endcan
@@ -503,36 +502,36 @@
                             <thead style="background-color:#AF8F6F">
                                 <th style="color:#fff;" class="text-center">Nombre</th>
                                 <th style="color:#fff;" class="text-center">Descripcion</th>
-                                <th style="color:#fff;" class="text-center">Nombre Provedor</th>
+                                <th style="color:#fff;" class="text-center">Nombre Proveedor</th>
                                 <th style="color:#fff;" class="text-center">Cantidad</th>
                                 <th style="color:#fff;" class="text-center">Precio</th>
                                 <th style="color:#fff;" class="text-center">Acciones</th>
                             </thead>
 
                             <tbody>
-                                @foreach ($materiaprimas as $materiaprima)
+                                @foreach ($materias as $materia)
                                 <tr>
-                                    <td class="text-center">{{ $materiaprima->nombre }}</td>
-                                    <td class="text-center">{{ $materiaprima->descripcion }}</td>
-                                    <td class="text-center">{{ $materiaprima->nombreproveedor }}</td>
-                                    <td class="text-center">{{ $materiaprima->cantidad }}</td>
-                                    <td class="text-center">{{ $materiaprima->precio }}</td>
+                                    <td class="text-center">{{ $materia->nombre }}</td>
+                                    <td class="text-center">{{ $materia->descripcion }}</td>
+                                    <td class="text-center">{{ $materia->proveedor }}</td>
+                                    <td class="text-center">{{ $materia->cantidad }}</td>
+                                    <td class="text-center">{{ $materia->precio }}</td>
                                     <td class="text-center">
-                                        @can('editar-materiaprimas')
-                                        <a href="{{ route('materiaprimas.edit', $materiaprima->id_materiaprima) }}"
+                                        @can('editar-materias')
+                                        <a href="{{ route('materias.edit', $materia->id) }}"
                                             class="btn btn-warning mr-1 css-button-sliding-to-left--yellow">
                                             <i class="fas fa-edit"></i>
                                             Editar
                                         </a>
                                         @endcan
-                                        @can('borrar-materiaprimas')
+                                        @can('borrar-materias')
                                         <button type="button" class="btn btn-danger css-button-sliding-to-left--red"
-                                            onclick="confirmarEliminacion({{ $materiaprima->id_materiaprima }})">
+                                            onclick="confirmarEliminacion({{ $materia->id }})">
                                             <i class="fas fa-trash-alt"></i>
                                             Eliminar
                                         </button>
-                                        <form id="eliminar-form-{{ $materiaprima->id_materiaprima }}"
-                                            action="{{ route('materiaprimas.destroy', $materiaprima->id_materiaprima) }}"
+                                        <form id="eliminar-form-{{ $materia->id }}"
+                                            action="{{ route('materias.destroy', $materia->id) }}"
                                             method="POST" class="d-none">
                                             @csrf
                                             @method('DELETE')
@@ -543,41 +542,40 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        @foreach ($materiaprimas as $materiaprima)
+
+                        @foreach ($materias as $materia)
                         <div class="mobile-card d-lg-none">
                             <div class="row">
                                 <div class="col-6"><label>Nombre:</label></div>
-                                <div class="col-6">{{ $materiaprima->nombre }}</div>
+                                <div class="col-6">{{ $materia->nombre }}</div>
                             </div>
                             <div class="row">
                                 <div class="col-6"><label>Descripcion:</label></div>
-                                <div class="col-6">{{ $materiaprima->descripcion }}</div>
+                                <div class="col-6">{{ $materia->descripcion }}</div>
                             </div>
-                            <div class="form-group">
-                                <label for="nombreproveedor" class="form-label">Nombre del Proveedor</label>
-                                <input type="text" name="nombreproveedor" class="form-control"
-                                    value="{{ old('nombreproveedor', $materiaprima->nombreproveedor ?? '') }}">
+                            <div class="row">
+                                <div class="col-6"><label>Nombre Proveedor:</label></div>
+                                <div class="col-6">{{ $materia->proveedor }}</div>
                             </div>
-
                             <div class="row">
                                 <div class="col-6"><label>Cantidad:</label></div>
-                                <div class="col-6">{{ $materiaprima->cantidad }}</div>
+                                <div class="col-6">{{ $materia->cantidad }}</div>
                             </div>
                             <div class="row">
                                 <div class="col-6"><label>Precio:</label></div>
-                                <div class="col-6">{{ $materiaprima->precio }}</div>
+                                <div class="col-6">{{ $materia->precio }}</div>
                             </div>
                             <div class="row">
                                 <div class="col-6"><label>Acciones:</label></div>
                                 <div class="row action-buttons">
-                                    @can('editar-materiaprima')
-                                    <a href="{{ route('materiaprimas.edit', $materiaprima->id_materiaprima) }}"
+                                    @can('editar-materia')
+                                    <a href="{{ route('materias.edit', $materia->id) }}"
                                         class="btn btn-warning mr-1 css-button-sliding-to-left--yellow">
                                         <i class="fas fa-edit"></i> Editar
                                     </a>
                                     @endcan
-                                    @can('borrar-materiaprima')
-                                    <form action="{{ route('materiaprimas.destroy', $materiaprima->id_materiaprima) }}"
+                                    @can('borrar-materia')
+                                    <form action="{{ route('materias.destroy', $materia->id) }}"
                                         method="POST" class="d-inline-block">
                                         @csrf
                                         @method('DELETE')
@@ -592,10 +590,9 @@
                         </div>
                         @endforeach
 
-
                         <!-- Ubicamos la paginación a la derecha -->
                         <div class="pagination justify-content-end">
-                            {!! $materiaprimas->links() !!}
+                            {!! $materias->links() !!}
                         </div>
                     </div>
                 </div>
@@ -605,9 +602,7 @@
 </section>
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<!-- DATATABLES -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<!-- BOOTSTRAP -->
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -646,7 +641,7 @@ new DataTable('#miTabla2', {
     pageLength: 10
 });
 
-function confirmarEliminacion(id_materiaprima) {
+function confirmarEliminacion(id) {
     Swal.fire({
         title: '¿Estás seguro?',
         text: "¡No podrás revertir esto!",
@@ -657,12 +652,12 @@ function confirmarEliminacion(id_materiaprima) {
         confirmButtonText: 'Sí, eliminarlo'
     }).then((result) => {
         if (result.isConfirmed) {
-            document.getElementById('eliminar-form-' + id_materiaprima).submit();
+            document.getElementById('eliminar-form-' + id).submit();
             Swal.fire({
                 title: 'Eliminado!',
                 text: 'El ingrediente ha sido eliminado correctamente.',
                 icon: 'success',
-                timer: 4000, // Duración en milisegundos
+                timer: 4000,
                 showConfirmButton: false
             });
         }
@@ -671,3 +666,4 @@ function confirmarEliminacion(id_materiaprima) {
 </script>
 
 @endsection
+

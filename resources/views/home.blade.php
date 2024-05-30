@@ -185,17 +185,20 @@ img {
                             <div class="col-md-4 col-xl-4">
                                 <div class="card card-custom bg-danger text-white shadow">
                                     <div class="card-body">
-                                        <h5 class="card-title"><i class="fa fa-user-graduate"></i>Materia prima</h5>
+                                        <h5 class="card-title"><i class="fa fa-user-graduate"></i> Materia prima</h5>
+                            
                                         @php
-                                        $cant_materiaprimas = \App\Models\Materiaprima::count();
+                                            $cant_materias = \App\Models\Materia::count();
                                         @endphp
+                            
                                         <h2 class="text-right">
-                                            <span>{{$cant_materiaprimas}}</span>
+                                            <span>{{ $cant_materias }}</span>
                                         </h2>
-                                        <p class="mb-0 text-right"><a href="/materiaprimas" class="text-white">Ver más</a></p>
+                            
+                                        <p class="mb-0 text-right"><a href="/materias" class="text-white">Ver más</a></p>
                                     </div>
                                 </div>
-                            </div>
+                            </div>                            
                             <!-- More card blocks -->
                         </div>
                     </div>

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@extends('layouts.app')
+
 @section('content')
 <section class="section" style="background-color: #e0e0eb; min-height: 100vh; display: flex; align-items: center;">
     <div class="container custom-container">
@@ -11,7 +13,7 @@
                             <i class="fas fa-arrow-left mr-2"></i> Regresar
                         </a>
                         <h3 class="page__heading text-center flex-grow-1 m-0">
-                            <i class="fas fa-user-plus mr-2"></i>Crear Ingredientes
+                            <i class="fas fa-user-plus mr-2"></i> Crear Ingredientes
                         </h3>
                     </div>
                     <div class="card-body p-4 bg-white">
@@ -29,7 +31,7 @@
                         </div>
                         @endif
 
-                        <form action="{{ route('materiaprimas.store') }}" method="POST" class="my-4">
+                        <form action="{{ route('materias.store') }}" method="POST" class="my-4">
                             @csrf
 
                             <div class="form-group floating-label">
@@ -55,10 +57,10 @@
                             </div>
 
                             <div class="form-group floating-label">
-                                <label for="nombreproveedor">Nombre Proveedor</label>
-                                <input type="text" name="nombreproveedor" class="form-control @error('nombreproveedor') is-invalid @enderror" id="nombreproveedor" required value="{{ old('nombreproveedor') }}">
+                                <label for="proveedor">Nombre Proveedor</label>
+                                <input type="text" name="proveedor" class="form-control @error('proveedor') is-invalid @enderror" id="proveedor" required value="{{ old('proveedor') }}">
                                 <small class="form-text text-muted">Formato: Solo letras</small>
-                                @error('nombreproveedor')
+                                @error('proveedor')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -67,7 +69,7 @@
                             
                             <div class="form-group floating-label">
                                 <label for="cantidad">Cantidad</label>
-                                <input type="text" name="cantidad" class="form-control @error('cantidad') is-invalid @enderror" id="cantidad" maxlength="8"  title="El número de control debe tener 8 dígitos numéricos" required value="{{ old('cantidad') }}">
+                                <input type="text" name="cantidad" class="form-control @error('cantidad') is-invalid @enderror" id="cantidad" maxlength="8" title="El número de control debe tener 8 dígitos numéricos" required value="{{ old('cantidad') }}">
                                 <small class="form-text text-muted">Formato: 8 dígitos numéricos</small>
                                 @error('cantidad')
                                 <span class="invalid-feedback" role="alert">
@@ -77,7 +79,7 @@
                             </div>   
                             <div class="form-group floating-label">
                                 <label for="precio">Precio</label>
-                                <input type="text" name="precio" class="form-control @error('precio') is-invalid @enderror" id="precio" maxlength="8"  title="El número de control debe tener 8 dígitos numéricos" required value="{{ old('precio') }}">
+                                <input type="text" name="precio" class="form-control @error('precio') is-invalid @enderror" id="precio" maxlength="8" title="El número de control debe tener 8 dígitos numéricos" required value="{{ old('precio') }}">
                                 <small class="form-text text-muted">Formato: 8 dígitos numéricos</small>
                                 @error('precio')
                                 <span class="invalid-feedback" role="alert">
@@ -85,7 +87,6 @@
                                 </span>
                                 @enderror
                             </div>
-                                       
 
                             <div class="text-center">
                                 <button type="submit" class="btn btn-pink btn-block btn-submit">Guardar</button>
@@ -112,15 +113,15 @@
             }
         });
 
-        // Validación en tiempo real para los campos de nombre y apellidos
-        $('#nombre','#descripcion','#nombreproveedor').on('input', function(event) {
+        // Validación en tiempo real para los campos de nombre, descripción y proveedor
+        $('#nombre, #descripcion, #proveedor').on('input', function(event) {
             var regex = /[^a-zA-Z\s]/g;
             var newValue = $(this).val().replace(regex, '');
             $(this).val(newValue);
         });
 
-        // Validación en tiempo real para "precio y cantidad"
-        $('#precio,#cantidad').on('input', function(event) {
+        // Validación en tiempo real para precio y cantidad
+        $('#precio, #cantidad').on('input', function(event) {
             var regex = /[^0-9]/g;
             var newValue = $(this).val().replace(regex, '');
             if (newValue.length > 8) {
@@ -131,6 +132,7 @@
     });
 </script>
 @endsection
+
 
 @section('styles')
 <style>

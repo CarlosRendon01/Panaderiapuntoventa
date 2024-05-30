@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <section class="section" style="background-image: url('ruta/a/tu/imagen-de-fondo.jpg'); background-size: cover; min-height: 100vh; display: flex; align-items: center;">
     <div class="container custom-container">
@@ -27,38 +26,38 @@
                         </div>
                         @endif
 
-                        <form action="{{ route('materiaprimas.update', $materiaprima->id_materiaprima) }}" method="POST" class="my-4">
+                        <form action="{{ route('materias.update', $materia->id) }}" method="POST" class="my-4">
                             @csrf
                             @method('PUT')
                             <div class="row">    
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <label for="nombre" class="form-label">Nombre</label>
-                                        <input type="text" name="nombre" class="form-control" value="{{ $materiaprima->nombre }}">
+                                        <input type="text" name="nombre" class="form-control" value="{{ $materia->nombre }}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <label for="descripcion" class="form-label">Descripcion</label>
-                                        <input type="text" name="descripcion" class="form-control" value="{{ $materiaprima->descripcion }}">
+                                        <input type="text" name="descripcion" class="form-control" value="{{ $materia->descripcion }}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
-                                        <label for="nombreproveedor" class="form-label">Nombre Proveedor</label>
-                                        <input type="text" name="nombreproveedor" class="form-control" value="{{ $materiaprima->nombreproveedor }}">
+                                        <label for="proveedor" class="form-label">Nombre Proveedor</label>
+                                        <input type="text" name="proveedor" class="form-control" value="{{ $materia->proveedor }}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <label for="cantidad" class="form-label">Cantidad</label>
-                                        <input type="text" name="cantidad" class="form-control" value="{{ $materiaprima->cantidad }}">
+                                        <input type="text" name="cantidad" class="form-control" value="{{ $materia->cantidad }}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <label for="precio" class="form-label">Precio</label>
-                                        <textarea name="precio" class="form-control">{{ $materiaprima->precio }}</textarea>
+                                        <input type="text" name="precio" class="form-control" value="{{ $materia->precio }}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -84,12 +83,12 @@
                 $(this).parent().removeClass('active');
             }
         });
-        $('#nombre, #descripcion','#nombreproveedor').on('input', function(event) {
+        $('#nombre, #descripcion, #proveedor').on('input', function(event) {
             var regex = /[^a-zA-Z\s]/g;
             var newValue = $(this).val().replace(regex, '');
             $(this).val(newValue);
         });
-        $('#precio,#cantidad').on('input', function(event) {
+        $('#precio, #cantidad').on('input', function(event) {
             var regex = /[^0-9]/g;
             var newValue = $(this).val().replace(regex, '');
             if (newValue.length > 8) {
