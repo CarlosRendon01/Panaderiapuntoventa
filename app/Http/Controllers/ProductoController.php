@@ -35,7 +35,7 @@ class ProductoController extends Controller
             'materias_primas.*' => 'exists:materias,id',
             'cantidades' => 'required|array|size:' . count($request->materias_primas),
             'cantidades.*' => 'numeric|min:1',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ]);
 
         // Manejo de la imagen
