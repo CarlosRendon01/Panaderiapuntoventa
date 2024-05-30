@@ -2,63 +2,65 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Puntoventa;
+use App\Models\Venta;
 use Illuminate\Http\Request;
 
-class PuntoventaController extends Controller
+class VentaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:ver-ventas', ['only' => ['index', 'show']]);
+        $this->middleware('permission:crear-ventas', ['only' => ['create', 'store']]);
+        $this->middleware('permission:editar-ventas', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:eliminar-ventas', ['only' => ['destroy']]);
+    }    
+
     public function index()
     {
-        $puntoventas = Puntoventa::paginate(10);
-        return view('puntoventas.index', compact('puntoventas'));
+        $ventas = Venta::paginate(300);
+        return view('ventas.index', compact('ventas'));
     }
 
     public function create()
     {
-        return view('puntoventas.crear');
+        return view('ventas.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'id_punventa' => 'required|unique:puntoventas',
             'descripcion' => 'required|string|max:255',
+            'total' => 'required|numeric',
         ]);
 
-        Puntoventa::create($request->all());
-
-        return redirect()->route('puntoventas.index')
-                         ->with('success', 'Punto de Venta creado exitosamente.');
+        Venta::create($request->all());
+        return redirect()->route('ventas.index')->with('success', 'Venta creada exitosamente.');
     }
 
-    public function show(Puntoventa $puntoventa)
+    public function show(Venta $venta)
     {
-        return view('puntoventas.show', compact('puntoventa'));
+        return view('ventas.show', compact('venta'));
     }
 
-    public function edit($id_punventa)
+    public function edit(Venta $venta)
     {
-        $puntoventa = Puntoventa::findOrFail($id_punventa);
-        return view('puntoventas.edit', compact('puntoventa'));
+        return view('ventas.editar', compact('venta'));
     }
 
-    public function update(Request $request, Puntoventa $puntoventa)
+    public function update(Request $request, Venta $venta)
     {
         $request->validate([
             'descripcion' => 'required|string|max:255',
+            'total' => 'required|numeric',
         ]);
 
-        $puntoventa->update($request->all());
-
-        return redirect()->route('puntoventas.index')
-                         ->with('success', 'Punto de Venta actualizado exitosamente.');
+        $venta->update($request->all());
+        return redirect()->route('ventas.index')->with('success', 'Venta actualizada exitosamente.');
     }
 
-    public function destroy(Puntoventa $puntoventa)
+    public function destroy(Venta $venta)
     {
-        $puntoventa->delete();
-
-        return redirect()->route('puntoventas.index')
-                         ->with('success', 'Punto de Venta eliminado exitosamente.');
+        $venta->delete();
+        return redirect()->route('ventas.index')->with('success', 'Venta eliminada exitosamente.');
     }
 }

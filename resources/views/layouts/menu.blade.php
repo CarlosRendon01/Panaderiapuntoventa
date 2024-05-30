@@ -39,7 +39,7 @@
     </li>
     @endcan
 
-    @can('ver-venta')
+    @can('ver-ventas')
     <li class="{{ Request::is('ventas*') ? 'active' : '' }}">
         <a class="nav-link d-flex align-items-center" href="/ventas">
             <i class="fas fa-shopping-cart" style="color: #4682B4; margin-right: 8px;"></i>

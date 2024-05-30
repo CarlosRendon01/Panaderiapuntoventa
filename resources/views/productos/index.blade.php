@@ -1,745 +1,176 @@
 @extends('layouts.app')
 
 <style>
-/* Navbar Styles */
-.navbar {
-    background-color: #8B4513; /* Color café */
-    border-bottom: 2px solid #A0522D; /* Línea inferior café más claro */
-    padding: 1rem 1.5rem;
-}
-
-.navbar .navbar-brand {
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-.navbar .navbar-brand:hover {
-    color: #FFD700; /* Dorado */
-}
-
-.navbar .navbar-nav .nav-link {
-    color: #fff;
-    font-size: 1rem;
-    margin: 0 0.5rem;
-    transition: color 0.3s;
-}
-
-.navbar .navbar-nav .nav-link:hover {
-    color: #FFD700; /* Dorado */
-}
-
-/* Sidebar Styles */
-#sidebar-wrapper {
-    background-color: #8B4513; /* Color café */
-    color: #fff;
-    transition: all 0.3s;
-}
-
-.sidebar-brand a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    padding: 10px 0;
-}
-
-.brand-name {
-    font-family: 'Arial', sans-serif;
-    font-size: 24px;
-    font-weight: bold;
-    color: #fff;
-    padding: 0 10px;
-}
-
-.sidebar-menu {
-    list-style: none;
-    padding: 20px 10px;
-}
-
-.sidebar-menu li a {
-    display: block;
-    color: #fff; /* Color blanco para el texto de los enlaces */
-    padding: 10px;
-    border-radius: 4px;
-    transition: color 0.3s, background-color 0.3s;
-}
-
-.sidebar-menu li a:hover {
-    color: #FFD700; /* Dorado */
-    background-color: #A0522D; /* Color café más claro */
-    text-decoration: none;
-}
-
-.app-header-logo {
-    transition: transform 0.3s ease-in-out;
-}
-
-.app-header-logo:hover {
-    transform: scale(1.1);
-}
-
-.sidebar-brand-sm {
-    display: none;
-}
-
-@media (max-width: 768px) {
-    .sidebar-brand-sm {
-        display: block;
+    /* Estilos generales */
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f8f9fa;
     }
-    .sidebar-brand {
-        display: none;
+
+    .container {
+        max-width: 960px;
     }
-}
 
-/* Table Styles */
-#miTabla2 {
-    font-family: 'Open Sans', sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-#miTabla2 thead {
-    background-color: #8B4513; /* Color café */
-    color: #fff;
-}
-
-#miTabla2 thead th {
-    padding: 15px;
-    text-align: left;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-#miTabla2 tbody tr {
-    border-bottom: 1px solid #ddd;
-    transition: background-color 0.3s ease;
-}
-
-#miTabla2 tbody tr:hover {
-    background-color: #f5f5f5;
-}
-
-#miTabla2 tbody td {
-    padding: 12px 15px;
-}
-
-#miTabla2 tbody td .custom-badge {
-    background-color: #000000;
-    color: #fff;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-#miTabla2 tbody td .btn {
-    padding: 6px 12px;
-    font-size: 14px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-#miTabla2 tbody td .btn-warning {
-    background-color: #fff;
-    color: #212529;
-}
-
-#miTabla2 tbody td .btn-warning:hover {
-    background-color: #e0a800;
-}
-
-#miTabla2 tbody td .btn-danger {
-    background-color: #fff;
-    color: #041014;
-}
-
-#miTabla2 tbody td .btn-danger:hover {
-    background-color: #c82333;
-}
-
-.css-button-sliding-to-left--red {
-  min-width: 130px;
-  height: 40px;
-  color: #fff;
-  padding: 5px 10px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  display: inline-block;
-  outline: none;
-  border-radius: 5px;
-  z-index: 0;
-  background: #fff;
-  overflow: hidden;
-  border: 2px solid #d90429;
-  color: #d90429;
-}
-
-.css-button-sliding-to-left--red:hover {
-  color: #fff;
-}
-
-.css-button-sliding-to-left--red:hover:after {
-  width: 100%;
-}
-
-.css-button-sliding-to-left--red:after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  transition: all 0.3s ease;
-  left: 0;
-  top: 0;
-  width: 0;
-  height: 100%;
-  background: #d90429;
-}
-
-.css-button-sliding-to-left--yellow {
-  min-width: 130px;
-  height: 40px;
-  color: #fff;
-  padding: 5px 10px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  display: inline-block;
-  outline: none;
-  border-radius: 5px;
-  z-index: 0;
-  background: #fff;
-  overflow: hidden;
-  border: 2px solid #ffd819;
-  color: #ffd819;
-}
-.css-button-sliding-to-left--yellow:hover {
-  color: #fff;
-}
-.css-button-sliding-to-left--yellow:hover:after {
-  width: 100%;
-}
-.css-button-sliding-to-left--yellow:after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  transition: all 0.3s ease;
-  left: 0;
-  top: 0;
-  width: 0;
-  height: 100%;
-  background: #ffd819;
-}
-
-/* Estilos para el campo de búsqueda */
-.dataTables_filter {
-    position: relative;
-}
-
-.dataTables_filter input[type="search"] {
-    padding: 12px 40px 12px 20px;
-    border: none;
-    border-radius: 25px;
-    background-color: #f2f2f2;
-    font-size: 16px;
-    width: 300px;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.dataTables_filter input[type="search"]:focus {
-    outline: none;
-    width: 350px;
-    background-color: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.dataTables_filter::after {
-    content: "\f002";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-    color: #999;
-    transition: color 0.3s ease;
-}
-
-.dataTables_filter input[type="search"]:focus+::after {
-    color: #333;
-}
-
-/* Estilos para el menú de selección de registros */
-.dataTables_length {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 20px;
-}
-
-.dataTables_length label {
-    font-size: 16px;
-    font-weight: bold;
-    color: #555;
-}
-
-.btn-pink {
-        transition: all 0.3s ease;
-        background-color: #ff69b4; /* Fondo rosa */
-        color: #fff;
-        padding: 12px 20px;
+    /* Estilos para la tarjeta de producto */
+    .card {
         border: none;
-        border-radius: 8px;
-        font-size: 18px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 0.5rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease-in-out;
     }
 
-    .btn-pink:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        background-color: #ff1493; /* Rosa oscuro */
+    .card:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
+        transform: translateY(-5px);
     }
 
-    .btn-pink:focus {
-        outline: none;
-        box-shadow: 0 0 10px rgba(255, 105, 180, 0.3); /* Sombra rosa */
+    .card-img-container {
+        overflow: hidden;
     }
 
-.dataTables_length select {
-    padding: 10px 40px 10px 20px;
-    border: none;
-    border-radius: 25px;
-    background-color: #f2f2f2;
-    font-size: 16px;
-    width: 120px;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.dataTables_length select:focus {
-    outline: none;
-    background-color: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.dataTables_length select:hover {
-    background-color: #e6e6e6;
-}
-
-.dataTables_length::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 30px;
-    transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 6px solid #999;
-    pointer-events: none;
-    transition: border-color 0.3s ease;
-}
-
-.dataTables_length select:focus+::after {
-    border-top-color: #333;
-}
-
-/* Estilos para dispositivos móviles */
-@media (max-width: 992px) {
-    #miTabla2 {
-        display: none;
+    .card-img-top {
+        transition: transform 0.3s ease-in-out;
     }
 
-    .mobile-table {
-        display: block;
+    .card:hover .card-img-top {
+        transform: scale(1.1);
     }
 
-
-    .mobile-card {
-        background: #fff;
-        border: none;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        margin-bottom: 16px;
-        padding: 16px;
+    .card-body {
+        padding: 1.5rem;
     }
 
-    .mobile-card .row {
-        margin-bottom: 8px;
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
     }
 
-    .mobile-card label {
-        font-weight: bold;
-        color: #333;
+    .card-text {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
     }
 
-    .mobile-card .data {
-        font-size: 14px;
-        color: #666;
+    .btn {
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        transition: all 0.3s ease-in-out;
     }
 
-
-    .action-buttons {
-        display: flex;
-        justify-content: space-between;
-        padding: 12px 0;
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
     }
 
-    .btn-mobile {
-        flex: 0 1 48%;
-        margin: 0;
-        padding: 10px;
-        border-radius: 4px;
-        font-size: 14px;
-        text-align: center;
-        transition: all 0.3s ease;
+    .btn-primary:hover {
+        background-color: #0069d9;
+        border-color: #0062cc;
     }
 
-    .btn-mobile i {
-        font-size: 16px;
-        margin-right: 5px;
-    }
-
-    .btn-mobile:hover {
-        opacity: 0.8;
-    }
-
-
-    .btn-warning.btn-mobile {
+    .btn-warning {
         background-color: #ffc107;
+        border-color: #ffc107;
         color: #212529;
     }
 
-    .btn-danger.btn-mobile {
+    .btn-warning:hover {
+        background-color: #e0a800;
+        border-color: #d39e00;
+        color: #212529;
+    }
+
+    .btn-danger {
         background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+
+    /* Estilos para la paginación */
+    .pagination {
+        margin-bottom: 0;
+    }
+
+    .page-link {
+        color: #007bff;
+        background-color: #fff;
+        border-color: #dee2e6;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .page-link:hover {
+        color: #0056b3;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+    }
+
+    .page-item.active .page-link {
         color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
     }
 
-    .btn-mobile-action {
-        flex: 0 1 48%;
-        margin: 0;
-        padding: 10px;
-        border-radius: 4px;
-        font-size: 14px;
-        text-align: center;
-        transition: all 0.3s ease;
+    .page-item.disabled .page-link {
+        color: #6c757d;
+        background-color: #fff;
+        border-color: #dee2e6;
     }
-
-    .btn-mobile-action i {
-        font-size: 16px;
-        margin-right: 5px;
-    }
-
-    .btn-mobile-action:hover {
-        opacity: 0.8;
-    }
-}
-
-@media (min-width: 993px) {
-    .mobile-table {
-        display: none;
-    }
-}
-
-.custom-badge {
-    background-color: #483eff;
-    color: white;
-}
 </style>
-
 @section('content')
-<section class="section">
-    <div class="section-header">
-        <h3 class="page__heading">Productos</h3>
+<div class="container">
+    <h1 class="text-center my-4">Productos</h1>
+
+    @if(session('success'))
+    <div class="alert alert-success text-center">
+        {{ session('success') }}
     </div>
-    <div class="section-body">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            @can('crear-producto')
-                            <div class="d-flex">
-                                <a class="btn btn-warning" href="{{ route('productos.create') }}">
-                                    <i class="fas fa-plus"></i> Nuevo Producto
-                                </a>
-                                <button type="button" class="btn btn-primary ml-2" onclick="mostrarModal()">Cargar</button>
-                            </div>
-                            @endcan
-                        </div>
+    @endif
 
-                        <table class="table table-striped mt-2" id="miTabla2">
-                            <thead style="background-color:#AF8F6F">
-                                <th style="color:#fff;" class="text-center">Nombre</th>
-                                <th style="color:#fff;" class="text-center">Descripcion</th>
-                                <th style="color:#fff;" class="text-center">Precio</th>
-                                <th style="color:#fff;" class="text-center">Cantidad</th>
-                                <th style="color:#fff;" class="text-center">Materia Prima</th>
-                                <th style="color:#fff;" class="text-center">Acciones</th>
-                            </thead>
+    <div class="d-flex justify-content-end mb-4">
+        <a href="{{ route('productos.create') }}" class="btn btn-success">Crear Producto</a>
+    </div>
 
-                            <tbody>
-                                @foreach ($productos as $producto)
-                                <tr>
-                                    <td class="text-center">{{ $producto->nombre }}</td>
-                                    <td class="text-center">{{ $producto->descripcion }}</td>
-                                    <td class="text-center">{{ $producto->precio }}</td>
-                                    <td class="text-center">
-                
-                                    <input type="number" id="cantidad-{{ $producto->id_producto }}" value="{{ $producto->cantidad }}" class="form-control text-center" style="width: 80px;" readonly>
-            
-                                </td>
-            <td class="text-center" id="materia-prima-{{ $producto->id_producto }}">{{ $producto->materia_prima }}</td> <!-- Mostrar materia prima -->
-            <td class="text-center">
-                @can('editar-productos')
-                <a href="{{ route('productos.edit', $producto->id_producto) }}"
-                    class="btn btn-warning mr-1 css-button-sliding-to-left--yellow">
-                    <i class="fas fa-edit"></i>
-                    Editar
-                </a>
-                @endcan
-                @can('borrar-productos')
-                <button type="button" class="btn btn-danger css-button-sliding-to-left--red" onclick="confirmarEliminacion({{ $producto->id_producto }})">
-                    <i class="fas fa-trash-alt"></i>
-                    Eliminar
-                </button>
-                <form id="eliminar-form-{{ $producto->id_producto }}" action="{{ route('productos.destroy', $producto->id_producto) }}" method="POST" class="d-none">
-                    @csrf
-                    @method('DELETE')
-                                        </form>
-                                        @endcan
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        @foreach ($productos as $producto)
-                        <div class="mobile-card d-lg-none">
-                            <div class="row">
-                                <div class="col-6"><label>Nombre:</label></div>
-                                <div class="col-6">{{ $producto->nombre }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6"><label>Descripcion:</label></div>
-                                <div class="col-6">{{ $producto->descripcion }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6"><label>Precio:</label></div>
-                                <div class="col-6">{{ $producto->precio }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6"><label>Cantidad:</label></div>
-                                <div class="col-6">{{ $producto->cantidad }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6"><label>Acciones:</label></div>
-                                <div class="row action-buttons">
-                                    @can('editar-producto')
-                                    <a href="{{ route('productos.edit', $producto->id_producto) }}"
-                                        class="btn btn-warning mr-1 css-button-sliding-to-left--yellow">
-                                        <i class="fas fa-edit"></i> Editar
-                                    </a>
-                                    @endcan
-                                    @can('borrar-producto')
-                                    <form action="{{ route('productos.destroy', $producto->id_producto) }}" method="POST"
-                                        class="d-inline-block">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" class="btn btn-danger css-button-sliding-to-left--red"
-                                            onclick="return confirm('¿Estás seguro de eliminar este producto?')">
-                                            <i class="fas fa-trash-alt"></i> Eliminar
-                                        </button>
-                                    </form>
-                                    @endcan
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-
-
-                        <!-- Ubicamos la paginación a la derecha -->
-                        <div class="pagination justify-content-end">
-                            {!! $productos->links() !!}
-                        </div>
+    <div class="row justify-content-center">
+        @foreach($productos as $producto)
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-img-container"
+                    style="height: 250px; display: flex; justify-content: center; align-items: center; background-color: #f8f9fa;">
+                    @if($producto->imagen_url)
+                    <img src="{{ asset('storage/' . $producto->imagen_url) }}" class="card-img-top img-fluid"
+                        alt="{{ $producto->nombre }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    @else
+                    <img src="https://via.placeholder.com/150" class="card-img-top img-fluid"
+                        alt="{{ $producto->nombre }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    @endif
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ $producto->nombre }}</h5>
+                    <p class="card-text">{{ $producto->descripcion }}</p>
+                    <p class="card-text"><strong>Precio:</strong> ${{ number_format($producto->precio, 2) }}</p>
+                    <p class="card-text"><strong>Cantidad:</strong> {{ $producto->cantidad }}</p>
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ route('productos.show', $producto->id) }}" class="btn btn-primary">Ver Detalles</a>
+                        <a href="{{ route('productos.edit', $producto->id) }}" class="btn btn-warning">Editar</a>
+                        <form action="{{ route('productos.destroy', $producto->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?')">Eliminar</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+        @endforeach
     </div>
-</section>
 
-<!-- Modal para Cargar Cantidad -->
-<div class="modal fade" id="modalCargar" tabindex="-1" role="dialog" aria-labelledby="modalCargarLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalCargarLabel">Cargar Cantidad</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="formCargarCantidad">
-                    <div class="form-group">
-                        <label for="productoSelect">Producto</label>
-                        <select class="form-control" id="productoSelect" required>
-                            <option value="">Selecciona un producto</option>
-                            @foreach ($productos as $producto)
-                            <option value="{{ $producto->id_producto }}">{{ $producto->nombre }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="cantidadInput">Cantidad</label>
-                        <input type="number" class="form-control" id="cantidadInput" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Actualizar</button>
-                </form>
-            </div>
-        </div>
+    <div class="d-flex justify-content-center mt-4">
+        {{ $productos->links() }}
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<!-- DATATABLES -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<!-- BOOTSTRAP -->
-<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-<script>
-    new DataTable('#miTabla2', {
-            lengthMenu: [
-                [2, 5, 10, 15, 50],
-                [2, 5, 10, 15, 50]
-            ],
-            columns: [
-                { nombre: 'Nombre' },
-                { descripcion: 'Descripcion' },
-                { precio: 'Precio' },
-                { cantidad: 'Cantidad' },
-                { materia_prima: 'Materia Prima' },
-                { Acciones: 'Acciones' },
-            ],
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
-                search: "_INPUT_",
-                searchPlaceholder: "Buscar...",
-                lengthMenu: "Mostrar registros _MENU_ "
-            },
-            dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-            pageLength: 10
-        });
-
-    function mostrarModal() {
-        $('#modalCargar').modal('show');
-    }
-
-    $('#formCargarCantidad').on('submit', function(e) {
-        e.preventDefault();
-        let productoId = $('#productoSelect').val();
-        let cantidad = parseInt($('#cantidadInput').val()); // Convertir a entero
-        
-        if (productoId && cantidad > 0) {
-            // Aquí puedes hacer una llamada AJAX para actualizar la cantidad en el servidor
-            $.ajax({
-                url: '{{ route('productos.updateCantidad', '') }}/' + productoId,
-                method: 'POST',
-                data: {
-                    cantidad: cantidad,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    if(response.success) {
-                        Swal.fire({
-                            title: 'Cantidad Actualizada',
-                            text: 'La cantidad ha sido actualizada correctamente.',
-                            icon: 'success',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                        // Actualiza la cantidad en la tabla sumando la cantidad ingresada
-                        let currentQuantity = parseInt($('#cantidad-' + productoId).val());
-                        $('#cantidad-' + productoId).val(currentQuantity + cantidad);
-                        $('#modalCargar').modal('hide');
-                        // Actualiza la cantidad de materia prima en la vista de materia prima
-                        let materiaPrimaId = $('#materia-prima-' + productoId).data('materia-prima-id');
-                        $('#materia-prima-' + materiaPrimaId).text(response.materia_prima);
-                    } else {
-                        Swal.fire({
-                            title: 'Error',
-                            text: response.message,
-                            icon: 'error',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                    }
-                },
-                error: function(error) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Hubo un error al actualizar la cantidad.',
-                        icon: 'error',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                }
-            });
-        } else {
-            Swal.fire({
-                title: 'Error',
-                text: 'Por favor selecciona un producto y una cantidad válida.',
-                icon: 'error',
-                timer: 2000,
-                showConfirmButton: false
-            });
-        }
-    });
-
-    function confirmarEliminacion(id_producto) {
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: "¡No podrás revertir esto!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, eliminarlo'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('eliminar-form-' + id_producto).submit();
-                Swal.fire({
-                    title: 'Eliminado!',
-                    text: 'El producto ha sido eliminado correctamente.',
-                    icon: 'success',
-                    timer: 4000, // Duración en milisegundos
-                    showConfirmButton: false
-                });
-            }
-        });
-    }
-</script>
-
 @endsection
-
-
-

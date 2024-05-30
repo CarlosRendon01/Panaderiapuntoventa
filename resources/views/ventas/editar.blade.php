@@ -1,5 +1,5 @@
 @extends('layouts.app')
-{{
+
 @section('content')
 <section class="section" style="background-image: url('ruta/a/tu/imagen-de-fondo.jpg'); background-size: cover; min-height: 100vh; display: flex; align-items: center;">
     <div class="container custom-container">
@@ -39,20 +39,20 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
-                                        <label for="descripcion" class="form-label">Descripcion</label>
-                                        <input type="text" name="descripcion" class="form-control" value="{{ $producto->descripcion }}">
+                                        <label for="descripcion" class="form-label">Descripción</label>
+                                        <textarea name="descripcion" class="form-control">{{ $producto->descripcion }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <label for="precio" class="form-label">Precio</label>
-                                        <textarea name="precio" class="form-control">{{ $producto->precio }}</textarea>
+                                        <input type="number" name="precio" class="form-control" value="{{ $producto->precio }}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <label for="cantidad" class="form-label">Cantidad</label>
-                                        <input type="text" name="cantidad" class="form-control" value="{{ $producto->cantidad }}">
+                                        <input type="number" name="cantidad" class="form-control" value="{{ $producto->cantidad }}">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -71,26 +71,7 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
-        $('input[type="text"]').focus(function() {
-            $(this).parent().addClass('active');
-        }).blur(function() {
-            if ($(this).val() === '') {
-                $(this).parent().removeClass('active');
-            }
-        });
-        $('#nombre, #descripcion').on('input', function(event) {
-            var regex = /[^a-zA-Z\s]/g;
-            var newValue = $(this).val().replace(regex, '');
-            $(this).val(newValue);
-        });
-        $('#precio,#cantidad').on('input', function(event) {
-            var regex = /[^0-9]/g;
-            var newValue = $(this).val().replace(regex, '');
-            if (newValue.length > 8) {
-                newValue = newValue.substring(0, 8);
-            }
-            $(this).val(newValue);
-        });
+        // Agrega validaciones o funcionalidades de JavaScript aquí si es necesario
     });
 </script>
 @endsection
@@ -125,106 +106,28 @@
         background-color: #fff;
     }
 
-    .input-group-text {
-        cursor: pointer;
-    }
-
-    .card {
-        border: none;
-        border-radius: 15px;
-        overflow: hidden;
-        background-color: #ffe4e1; /* Rosa claro */
-    }
-
-    .card-header {
-        padding: 20px;
-        background-color: #D8AE7E;
-        border-bottom: none;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .card-header .btn-back {
-        display: flex;
-        align-items: center;
-        font-size: 14px;
-        padding: 8px 12px;
-        border-radius: 8px;
-        background-color: rgba(255, 255, 255, 0.1);
-        transition: background-color 0.2s ease;
-    }
-
-    .card-header .btn-back:hover {
-        background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .card-header .page__heading {
-        color: #ffffff;
-    }
-
-    .card-body {
-        padding: 30px;
-        background-color: #ffffff;
-        border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .alert {
-        margin-bottom: 20px;
-    }
-
     .btn-submit {
-        transition: all 0.3s ease;
         background-color: #4b479c;
         color: #fff;
         padding: 12px 20px;
-        border: none;
         border-radius: 8px;
         font-size: 18px;
+        border: none;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .btn-submit:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    .btn-submit:hover, .btn-submit:focus {
         background-color: #3a2c70;
-    }
-
-    .btn-submit:focus {
-        outline: none;
-        box-shadow: 0 0 10px rgba(75, 71, 156, 0.3);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
     }
 
     .section {
         padding: 60px 0;
-        background-color: #e0e0eb;
+        background-image: url('ruta/a/tu/imagen-de-fondo.jpg');
+        background-size: cover;
         min-height: 100vh;
         display: flex;
         align-items: center;
     }
-
-    .custom-container {
-        max-width: 800px;
-        margin: auto;
-        border: 3px solid #4b479c;
-        border-radius: 15px;
-        padding: 20px;
-        background-color: #ffffff;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
-    }
-
-    .custom-container:hover {
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-        transform: translateY(-2px);
-    }
-
-    @media (max-width: 768px) {
-        .custom-container {
-            padding: 0 20px;
-        }
-    }
 </style>
-}}
 @endsection

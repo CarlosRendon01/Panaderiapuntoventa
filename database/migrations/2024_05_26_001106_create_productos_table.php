@@ -17,6 +17,7 @@ class CreateProductosTable extends Migration
             $table->id(); // Define el campo id_producto como la clave primaria
             $table->string('nombre');
             $table->text('descripcion')->nullable();
+            $table->string('imagen_url', 255)->nullable(); // Agrega el campo imagen_url
             $table->decimal('precio', 8, 2); // Define el campo precio con dos decimales
             $table->integer('cantidad');
             $table->timestamps(); // Define los campos created_at y updated_at

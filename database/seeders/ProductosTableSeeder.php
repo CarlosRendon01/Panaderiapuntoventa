@@ -5,8 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-
-class ProductosTableSeeder  extends Seeder
+class ProductosTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,18 +16,20 @@ class ProductosTableSeeder  extends Seeder
     {
         $productos = [
             [
-                'nombre' => 'Producto 1',
-                'descripcion' => 'Descripción del Producto 1',
+                'nombre' => 'Pan Tostado',
+                'descripcion' => 'Muy rico',
+                'imagen_url' => 'imagenes_productos/pan-blanco.png',
                 'precio' => 10.00,
                 'cantidad' => 100,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nombre' => 'Producto 2',
-                'descripcion' => 'Descripción del Producto 2',
-                'precio' => 20.00,
-                'cantidad' => 200,
+                'nombre' => 'pan blanco pan pequeño',
+                'descripcion' => 'Muy deli',
+                'imagen_url' => 'imagenes_productos/tostado.png',
+                'precio' => 10.00,
+                'cantidad' => 90,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

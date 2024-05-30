@@ -10,6 +10,7 @@ use App\Http\Controllers\MateriaController;
 use App\Http\Controllers\PuntoventaController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\VentaController;
 
 
 // Ruta para la página de bienvenida, accesible para todos los usuarios
@@ -32,8 +33,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('usuarios', UsuarioController::class);
     Route::resource('productos', ProductoController::class); 
     Route::resource('materias', MateriaController::class);
-    Route::resource('puntoventas', PuntoventaController::class);
     // routes/web.php
+    Route::resource('ventas', VentaController::class);
 
     Route::post('/productos/updateCantidad/{id}', [ProductoController::class, 'updateCantidad'])->name('productos.updateCantidad');
 
