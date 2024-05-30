@@ -1,5 +1,5 @@
 @if(auth()->user()->canAny(['ver-rol', 'crear-rol', 'editar-rol', 'borrar-rol', 'ver-producto', 'crear-producto', 'editar-producto', 'borrar-producto', 'ver-log']))
-<ul class="side-menus {{ Request::is('*') ? 'active' : '' }}">
+<li class="side-menus {{ Request::is('*') ? 'active' : '' }}">
     @canany(['ver-rol', 'crear-rol', 'editar-rol', 'borrar-rol'])
     <li class="{{ Request::is('home*') ? 'active' : '' }}">
         <a class="nav-link d-flex align-items-center" href="/home">
@@ -30,8 +30,8 @@
     </li>
     @endcan
 
-    @can('ver-materiaprima')
-    <li class="{{ Request::is('materiaprimas*') ? 'active' : '' }}">
+    @can('ver-materia')
+    <li class="{{ Request::is('materias*') ? 'active' : '' }}">
         <a class="nav-link d-flex align-items-center" href="/materiaprimas">
             <i class="fas fa-user-graduate" style="color: #20B2AA; margin-right: 8px;"></i>
             <span class="menu-text" style="font-weight: 600; color: #333;">Materia prima</span>
@@ -39,11 +39,20 @@
     </li>
     @endcan
 
-    @can('ver-puntoventa')
-    <li class="{{ Request::is('puntoventas*') ? 'active' : '' }}">
-        <a class="nav-link d-flex align-items-center" href="/puntoventas">
+    @can('ver-venta')
+    <li class="{{ Request::is('ventas*') ? 'active' : '' }}">
+        <a class="nav-link d-flex align-items-center" href="/ventas">
             <i class="fas fa-user-graduate" style="color: #20B2AA; margin-right: 8px;"></i>
-            <span class="menu-text" style="font-weight: 600; color: #333;">Punto venta</span>
+            <span class="menu-text" style="font-weight: 600; color: #333;">Venta</span>
+        </a>
+    </li>
+    @endcan
+
+    @can('ver-pedido')
+    <li class="{{ Request::is('pedidos*') ? 'active' : '' }}">
+        <a class="nav-link d-flex align-items-center" href="/pedidos">
+            <i class="fas fa-user-graduate" style="color: #20B2AA; margin-right: 8px;"></i>
+            <span class="menu-text" style="font-weight: 600; color: #333;">Pedidos</span>
         </a>
     </li>
     @endcan

@@ -12,21 +12,16 @@ class Producto extends Model
     // Especifica el nombre de la tabla si no sigue la convención de nombres de Laravel
     protected $table = 'productos';
 
-    // Activa los timestamps si tu tabla tiene las columnas created_at y updated_at
-    public $timestamps = true;
-
-    // Especifica la clave primaria si no es 'id'
-    protected $primaryKey = 'id_producto';
+    protected $primaryKey = 'id';
+    public $incrementing = true;
+    protected $keyType = 'integer';
 
     // Especifica qué campos pueden ser asignados masivamente
     protected $fillable = [
-
         'nombre',
         'descripcion',
         'precio',
         'cantidad',
-        'materia_prima',
-        'cantidad_por_producto'
     ];
 
     // Define la relación con el modelo Pedido
@@ -36,15 +31,15 @@ class Producto extends Model
     }
 
     // Define la relación con el modelo Materiaprima
-    public function materiasPrimas()
+    public function materias()
     {
-        return $this->belongsToMany(Materiaprima::class, 'pro_materia', 'id_producto', 'id_materiaprima')->withPivot('cantidad');
+        return $this->belongsToMany(Materia::class, 'pro_materia', 'id_producto', 'id_materiaprima')->withPivot('cantidad');
     }
 
     // Define la relación con el modelo Puntoventa
-    public function puntoventas()
+    public function ventas()
     {
-        return $this->belongsToMany(Puntoventa::class, 'pventa_prod', 'id_producto', 'id_punventa');
+        return $this->belongsToMany(Venta::class, 'pventa_prod', 'id_producto', 'id_venta');
     }
 
     // Aquí puedes definir relaciones, scopes, y otros comportamientos del modelo

@@ -14,12 +14,11 @@ class CreateProductosTable extends Migration
     public function up()
     {
         Schema::create('productos', function (Blueprint $table) {
-            $table->id('id_producto'); // Define el campo id_producto como la clave primaria
+            $table->id(); // Define el campo id_producto como la clave primaria
             $table->string('nombre');
             $table->text('descripcion')->nullable();
             $table->decimal('precio', 8, 2); // Define el campo precio con dos decimales
             $table->integer('cantidad');
-            $table->text('materia_prima')->nullable(); // Nueva columna para materias primas
             $table->timestamps(); // Define los campos created_at y updated_at
         });
     }

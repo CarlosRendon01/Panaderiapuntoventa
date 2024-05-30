@@ -1,17 +1,17 @@
 @extends('layouts.app')
-{{
+
 @section('content')
-<section class="section" style="background-image: url('ruta/a/tu/imagen-de-fondo.jpg'); background-size: cover;">
-    <div class="container">
+<section class="section" style="background-image: url('ruta/a/tu/imagen-de-fondo.jpg'); background-size: cover; min-height: 100vh; display: flex; align-items: center;">
+    <div class="container custom-container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card shadow">
+                <div class="card shadow-lg border-0 rounded-lg">
                     <div class="card-header d-flex align-items-center justify-content-between bg-primary text-white">
-                        <a href="{{ url()->previous() }}" class="btn btn-back text-white">
+                        <a href="{{ url()->previous() }}" class="btn btn-pink text-white">
                             <i class="fas fa-arrow-left mr-2"></i> Regresar
                         </a>
                         <h3 class="page__heading text-center flex-grow-1 m-0">
-                            <i class="fas fa-book mr-2"></i>Editar Materia
+                            <i class="fas fa-book mr-2"></i> Editar Ingrediente
                         </h3>
                     </div>
                     <div class="card-body p-4 bg-white">
@@ -27,29 +27,43 @@
                         </div>
                         @endif
 
-                        <form action="{{ route('materias.update', $materia->id) }}" method="POST" class="my-4">
+                        <form action="{{ route('materiaprimas.update', $materiaprima->id_materiaprima) }}" method="POST" class="my-4">
                             @csrf
                             @method('PUT')
-                            <div class="form-group">
-                                <div class="floating-label">
-                                    <label for="clave">Clave</label>
-                                    <input type="text" name="clave" class="form-control" id="clave" value="{{ $materia->clave }}">
+                            <div class="row">    
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="nombre" class="form-label">Nombre</label>
+                                        <input type="text" name="nombre" class="form-control" value="{{ $materiaprima->nombre }}">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="floating-label">
-                                    <label for="nombre">Nombre</label>
-                                    <input type="text" name="nombre" class="form-control" id="nombre" value="{{ $materia->nombre }}">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="descripcion" class="form-label">Descripcion</label>
+                                        <input type="text" name="descripcion" class="form-control" value="{{ $materiaprima->descripcion }}">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="floating-label">
-                                    <label for="creditos">Créditos</label>
-                                    <input type="number" name="creditos" class="form-control" id="creditos" value="{{ $materia->creditos }}">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="nombreproveedor" class="form-label">Nombre Proveedor</label>
+                                        <input type="text" name="nombreproveedor" class="form-control" value="{{ $materiaprima->nombreproveedor }}">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary btn-block btn-submit">Actualizar Materia</button>
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="cantidad" class="form-label">Cantidad</label>
+                                        <input type="text" name="cantidad" class="form-control" value="{{ $materiaprima->cantidad }}">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="precio" class="form-label">Precio</label>
+                                        <textarea name="precio" class="form-control">{{ $materiaprima->precio }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                                    <button type="submit" class="btn btn-pink btn-block btn-submit">Guardar</button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -63,12 +77,25 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
-        $('input').focus(function() {
+        $('input[type="text"]').focus(function() {
             $(this).parent().addClass('active');
         }).blur(function() {
             if ($(this).val() === '') {
                 $(this).parent().removeClass('active');
             }
+        });
+        $('#nombre, #descripcion','#nombreproveedor').on('input', function(event) {
+            var regex = /[^a-zA-Z\s]/g;
+            var newValue = $(this).val().replace(regex, '');
+            $(this).val(newValue);
+        });
+        $('#precio,#cantidad').on('input', function(event) {
+            var regex = /[^0-9]/g;
+            var newValue = $(this).val().replace(regex, '');
+            if (newValue.length > 8) {
+                newValue = newValue.substring(0, 8);
+            }
+            $(this).val(newValue);
         });
     });
 </script>
@@ -76,72 +103,48 @@
 
 @section('styles')
 <style>
-    .floating-label {
-        position: relative;
-        margin-bottom: 20px;
+    .bg-primary {
+        background-color: #D8AE7E;
     }
 
-    .floating-label label {
-        position: absolute;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        transition: all 0.2s ease;
-        color: #999;
-    }
-
-    .floating-label input:focus ~ label,
-    .floating-label input:not(:placeholder-shown) ~ label {
-        top: -20px;
-        font-size: 12px;
-        color: #333;
-    }
-
-    .btn-submit {
-        transition: all 0.3s ease;
-    }
-
-    .btn-submit:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-back {
-        color: #ffffff;
+    .form-label {
+        font-weight: bold;
+        color: #4b479c;
+        margin-bottom: 5px;
         font-size: 16px;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        transition: background-color 0.3s ease, color 0.3s ease;
-        background-color: #8c52ff;
-        padding: 8px 12px;
-        border-radius: 4px;
     }
 
-    .btn-back i {
-        color: #ffffff;
-        font-size: 18px;
-        margin-right: 5px;
+    .form-control {
+        padding: 12px 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        width: 100%;
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+        font-size: 16px;
+        background-color: #f9f9f9;
     }
 
-    .btn-back:hover {
-        background-color: #5a26dd;
-        color: #ffffff;
+    .form-control:focus {
+        border-color: #4b479c;
+        box-shadow: 0 0 8px rgba(75, 71, 156, 0.3);
+        background-color: #fff;
     }
 
-    .btn-back:hover i {
-        color: #ffffff;
+    .input-group-text {
+        cursor: pointer;
     }
 
     .card {
         border: none;
         border-radius: 15px;
         overflow: hidden;
+        background-color: #ffe4e1; /* Rosa claro */
     }
 
     .card-header {
         padding: 20px;
-        background-color: #4b479c;
+        background-color: #D8AE7E;
         border-bottom: none;
         display: flex;
         align-items: center;
@@ -229,5 +232,4 @@
         }
     }
 </style>
-}}
 @endsection

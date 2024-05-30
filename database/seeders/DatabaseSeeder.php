@@ -19,12 +19,10 @@ class DatabaseSeeder extends Seeder
     {
          // Llama a los seeders específicos aquí
          $this->call([
-            MateriasPrimaTableSeeder::class,
+            MateriasTableSeeder::class,
             PedidosTableSeeder::class,
             ProductosTableSeeder::class,
-            PuntoVentasTableSeeder::class,
-            HorariosTableSeeder::class,
-            
+            VentasTableSeeder::class,
             SeederTablaPermisos::class,
             RoleSeeder::class,
             SeedersUserSeeder::class,

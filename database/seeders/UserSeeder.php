@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
         ]);
 
         // Asignamos el rol 'Secretaria' al otro usuario
-        $secretaryRole = Role::where('name', 'Secretaria')->first();
+        $secretaryRole = Role::where('name', 'Empleado')->first();
         if ($secretaryRole) {
             $user->assignRole($secretaryRole);
         }

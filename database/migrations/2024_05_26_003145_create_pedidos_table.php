@@ -15,8 +15,6 @@ class CreatePedidosTable extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id(); // Define el campo id_pedido como la clave primaria
-            $table->string('nombre');
-            $table->string('cliente');  // Parece que debería ser 'cliente' en lugar de 'ciente'
             $table->decimal('total', 10, 2);
             $table->text('descripcion')->nullable();
             $table->timestamps(); // Define los campos created_at y updated_at

@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 
-class PuntoVentasTableSeeder  extends Seeder
+class VentasTableSeeder  extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,19 +15,21 @@ class PuntoVentasTableSeeder  extends Seeder
      */
     public function run()
     {
-        $puntoventas = [
+        $ventas = [
             [
                 'descripcion' => 'Punto de Venta 1',
+                'total' => 300,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'descripcion' => 'Punto de Venta 2',
+                'total' => 300,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
         ];
 
-        DB::table('puntoventas')->insert($puntoventas);
+        DB::table('ventas')->insert($ventas);
     }
 }

@@ -1,7 +1,109 @@
 @extends('layouts.app')
-{{
+
 <style>
-   #miTabla2 {
+/* Navbar Styles */
+.navbar {
+    background-color: #8B4513;
+    /* Color café */
+    border-bottom: 2px solid #A0522D;
+    /* Línea inferior café más claro */
+    padding: 1rem 1.5rem;
+}
+
+.navbar .navbar-brand {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.navbar .navbar-brand:hover {
+    color: #FFD700;
+    /* Dorado */
+}
+
+.navbar .navbar-nav .nav-link {
+    color: #fff;
+    font-size: 1rem;
+    margin: 0 0.5rem;
+    transition: color 0.3s;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+    color: #FFD700;
+    /* Dorado */
+}
+
+/* Sidebar Styles */
+#sidebar-wrapper {
+    background-color: #8B4513;
+    /* Color café */
+    color: #fff;
+    transition: all 0.3s;
+}
+
+.sidebar-brand a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 10px 0;
+}
+
+.brand-name {
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    padding: 0 10px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 20px 10px;
+}
+
+.sidebar-menu li a {
+    display: block;
+    color: #fff;
+    /* Color blanco para el texto de los enlaces */
+    padding: 10px;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.sidebar-menu li a:hover {
+    color: #FFD700;
+    /* Dorado */
+    background-color: #A0522D;
+    /* Color café más claro */
+    text-decoration: none;
+}
+
+.app-header-logo {
+    transition: transform 0.3s ease-in-out;
+}
+
+.app-header-logo:hover {
+    transform: scale(1.1);
+}
+
+.sidebar-brand-sm {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .sidebar-brand-sm {
+        display: block;
+    }
+
+    .sidebar-brand {
+        display: none;
+    }
+}
+
+/* Table Styles */
+#miTabla2 {
     font-family: 'Open Sans', sans-serif;
     border-collapse: collapse;
     width: 100%;
@@ -11,7 +113,8 @@
 }
 
 #miTabla2 thead {
-    background-color: #483eff;
+    background-color: #8B4513;
+    /* Color café */
     color: #fff;
 }
 
@@ -73,219 +176,210 @@
 }
 
 .css-button-sliding-to-left--red {
-  min-width: 130px;
-  height: 40px;
-  color: #fff;
-  padding: 5px 10px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  display: inline-block;
-  outline: none;
-  border-radius: 5px;
-  z-index: 0;
-  background: #fff;
-  overflow: hidden;
-  border: 2px solid #d90429;
-  color: #d90429;
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    z-index: 0;
+    background: #fff;
+    overflow: hidden;
+    border: 2px solid #d90429;
+    color: #d90429;
 }
 
 .css-button-sliding-to-left--red:hover {
-  color: #fff;
+    color: #fff;
 }
 
 .css-button-sliding-to-left--red:hover:after {
-  width: 100%;
+    width: 100%;
 }
 
 .css-button-sliding-to-left--red:after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  transition: all 0.3s ease;
-  left: 0;
-  top: 0;
-  width: 0;
-  height: 100%;
-  background: #d90429;
+    content: "";
+    position: absolute;
+    z-index: -1;
+    transition: all 0.3s ease;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background: #d90429;
 }
 
 .css-button-sliding-to-left--yellow {
-  min-width: 130px;
-  height: 40px;
-  color: #fff;
-  padding: 5px 10px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  display: inline-block;
-  outline: none;
-  border-radius: 5px;
-  z-index: 0;
-  background: #fff;
-  overflow: hidden;
-  border: 2px solid #ffd819;
-  color: #ffd819;
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    z-index: 0;
+    background: #fff;
+    overflow: hidden;
+    border: 2px solid #ffd819;
+    color: #ffd819;
 }
+
 .css-button-sliding-to-left--yellow:hover {
-  color: #fff;
+    color: #fff;
 }
+
 .css-button-sliding-to-left--yellow:hover:after {
-  width: 100%;
+    width: 100%;
 }
+
 .css-button-sliding-to-left--yellow:after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  transition: all 0.3s ease;
-  left: 0;
-  top: 0;
-  width: 0;
-  height: 100%;
-  background: #ffd819;
+    content: "";
+    position: absolute;
+    z-index: -1;
+    transition: all 0.3s ease;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background: #ffd819;
 }
-    /* Estilos para el campo de búsqueda */
-    .dataTables_filter {
-        position: relative;
-    }
 
-    .dataTables_filter input[type="search"] {
-        padding: 12px 40px 12px 20px;
-        border: none;
-        border-radius: 25px;
-        background-color: #f2f2f2;
-        font-size: 16px;
-        width: 300px;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+/* Estilos para el campo de búsqueda */
+.dataTables_filter {
+    position: relative;
+}
 
-    .dataTables_filter input[type="search"]:focus {
-        outline: none;
-        width: 350px;
-        background-color: #fff;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+.dataTables_filter input[type="search"] {
+    padding: 12px 40px 12px 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: #f2f2f2;
+    font-size: 16px;
+    width: 300px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-    .dataTables_filter::after {
-        content: "\f002";
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        position: absolute;
-        top: 50%;
-        right: 20px;
-        transform: translateY(-50%);
-        color: #999;
-        transition: color 0.3s ease;
-    }
+.dataTables_filter input[type="search"]:focus {
+    outline: none;
+    width: 350px;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
 
-    .dataTables_filter input[type="search"]:focus+::after {
-        color: #333;
-    }
+.dataTables_filter::after {
+    content: "\f002";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    color: #999;
+    transition: color 0.3s ease;
+}
 
-    /* Estilos para el menú de selección de registros */
-    .dataTables_length {
-        position: relative;
-        display: inline-block;
-        margin-bottom: 20px;
-    }
+.dataTables_filter input[type="search"]:focus+::after {
+    color: #333;
+}
 
-    .dataTables_length label {
-        font-size: 16px;
-        font-weight: bold;
-        color: #555;
-    }
+/* Estilos para el menú de selección de registros */
+.dataTables_length {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
 
-    .dataTables_length select {
-        padding: 10px 40px 10px 20px;
-        border: none;
-        border-radius: 25px;
-        background-color: #f2f2f2;
-        font-size: 16px;
-        width: 120px;
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 15px center;
-        background-size: 20px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+.dataTables_length label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+}
 
-    .dataTables_length select:focus {
-        outline: none;
-        background-color: #fff;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+.btn-pink {
+    transition: all 0.3s ease;
+    background-color: #ff69b4;
+    /* Fondo rosa */
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-    .dataTables_length select:hover {
-        background-color: #e6e6e6;
-    }
+.btn-pink:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    background-color: #ff1493;
+    /* Cambiar a rosa oscuro */
+}
 
-    /* Estilos para los botones de acción en modo móvil */
-    .action-buttons {
-        display: flex;
-        justify-content: space-between;
-        padding: 12px 0;
-    }
+.btn-pink:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+    /* Cambiar a rosa */
+}
 
-    .btn-mobile {
-        flex: 0 1 48%;
-        /* Cada botón ocupa el 48% del espacio */
-        margin: 0;
-        padding: 8px;
-        border-radius: 4px;
-        font-size: 0;
-        /* Eliminar el texto */
-        text-align: center;
-        transition: all 0.3s ease;
-    }
+.dataTables_length select {
+    padding: 10px 40px 10px 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: #f2f2f2;
+    font-size: 16px;
+    width: 120px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-    .btn-mobile i {
-        font-size: 20px;
-        /* Aumentar el tamaño del icono */
-    }
+.dataTables_length select:focus {
+    outline: none;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
 
-    .btn-mobile:hover {
-        opacity: 0.8;
-    }
+.dataTables_length select:hover {
+    background-color: #e6e6e6;
+}
 
-    /* Colores de los botones */
-    .btn-warning.btn-mobile {
-        background-color: #ffc107;
-        color: #212529;
-    }
+.dataTables_length::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 30px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #999;
+    pointer-events: none;
+    transition: border-color 0.3s ease;
+}
 
-    .btn-danger.btn-mobile {
-        background-color: #dc3545;
-        color: #fff;
-    }
+.dataTables_length select:focus+::after {
+    border-top-color: #333;
+}
 
-    .dataTables_length::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        right: 30px;
-        transform: translateY(-50%);
-        width: 0;
-        height: 0;
-        border-left: 6px solid transparent;
-        border-right: 6px solid transparent;
-        border-top: 6px solid #999;
-        pointer-events: none;
-        transition: border-color 0.3s ease;
-    }
-
-    .dataTables_length select:focus+::after {
-        border-top-color: #333;
-    }
-
-    @media (max-width: 992px) {
+/* Estilos para dispositivos móviles */
+@media (max-width: 992px) {
     #miTabla2 {
         display: none;
     }
@@ -294,7 +388,7 @@
         display: block;
     }
 
-    /* Estilos para las tarjetas en modo móvil */
+
     .mobile-card {
         background: #fff;
         border: none;
@@ -318,7 +412,7 @@
         color: #666;
     }
 
-    /* Estilos para los botones de acción en modo móvil */
+
     .action-buttons {
         display: flex;
         justify-content: space-between;
@@ -344,7 +438,7 @@
         opacity: 0.8;
     }
 
-    /* Colores de los botones */
+
     .btn-warning.btn-mobile {
         background-color: #ffc107;
         color: #212529;
@@ -375,24 +469,22 @@
     }
 }
 
-    @media (min-width: 993px) {
-        .mobile-table {
-            display: none;
-        }
+@media (min-width: 993px) {
+    .mobile-table {
+        display: none;
     }
-    .custom-badge {
-    background-color: #483eff;
-    color: white; /* Cambia el color del texto a blanco para mejorar la legibilidad */
-
-    
 }
 
+.custom-badge {
+    background-color: #483eff;
+    color: white;
+}
 </style>
 
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h3 class="page__heading">Materias</h3>
+        <h3 class="page__heading">Materia Prima</h3>
     </div>
     <div class="section-body">
         <div class="row">
@@ -400,105 +492,110 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            @can('crear-inscripcion')
-                                <a class="btn btn-warning" href="{{ route('materias.create') }}">
-                                    <i class="fas fa-plus"></i> Nueva Materia
-                                </a>
+                            @can('crear-materiaprima')
+                            <a class="btn btn-warning" href="{{ route('materiaprimas.create') }}">
+                                <i class="fas fa-plus"></i> Nuevo ingrediente
+                            </a>
                             @endcan
                         </div>
-                        <div class="table-responsive">
-                            <table class="table table-striped mt-2" id="miTabla2">
-                                <thead style="background-color:#5f42d4">
-                                    <tr>
-                                        <th style="color:#fff;" class="text-center">Clave</th>
-                                        <th style="color:#fff;" class="text-center">Nombre</th>
-                                        <th style="color:#fff;" class="text-center">Créditos</th>
-                                        <th style="color:#fff;" class="text-center">Cantidad de Grupos</th>
-                                        <th style="color:#fff;" class="text-center">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($materias as $materia)
-                                    <tr>
-                                        <td class="text-center">{{ $materia->clave }}</td>
-                                        <td class="text-center">{{ $materia->nombre }}</td>
-                                        <td class="text-center">{{ $materia->creditos }}</td>
-                                        <td class="text-center">{{ $materia->grupos_count }}</td>
-                                        <td class="text-center">
-                                            @can('editar-materias')
-                                            <a href="{{ route('materias.edit', $materia->id) }}" class="btn btn-warning css-button-sliding-to-left--yellow">
-                                                <i class="fas fa-edit"></i> <span class="d-none d-sm-inline">Editar</span>
-                                            </a>
-                                            @endcan
-                                            @can('eliminar-materias')
-                                            <button type="button" class="btn btn-danger css-button-sliding-to-left--red" 
-                                                    onclick="{{ $materia->grupos_count > 0 ? 'mostrarMensaje()' : 'confirmarEliminacion(' . $materia->id . ')' }}" 
-                                                    title="{{ $materia->grupos_count > 0 ? 'No se puede eliminar porque hay más de un grupo ocupándolo' : '' }}"
-                                                    {{ $materia->grupos_count > 0 ? 'disabled' : '' }}>
-                                                <i class="fas fa-trash-alt"></i>
-                                                Eliminar
-                                            </button>
-                                            <form id="eliminar-form-{{ $materia->id }}" action="{{ route('materias.destroy', $materia->id) }}" method="POST" class="d-none">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
-                                            @endcan
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
 
-                            @foreach ($materias as $materia)
-                            <div class="mobile-card d-lg-none">
-                                <div class="row">
-                                    <div class="col-6"><label>Clave:</label></div>
-                                    <div class="col-6">{{ $materia->clave }}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6"><label>Nombre:</label></div>
-                                    <div class="col-6">{{ $materia->nombre }}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6"><label>creditos:</label></div>
-                                    <div class="col-6">{{ $materia->creditos }}</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6"><label>Cantidad de Grupos</label></div>
-                                    <div class="col-6">{{ $materia->grupos_count}}</div>
-                                </div>
+                        <table class="table table-striped mt-2" id="miTabla2">
+                            <thead style="background-color:#AF8F6F">
+                                <th style="color:#fff;" class="text-center">Nombre</th>
+                                <th style="color:#fff;" class="text-center">Descripcion</th>
+                                <th style="color:#fff;" class="text-center">Nombre Provedor</th>
+                                <th style="color:#fff;" class="text-center">Cantidad</th>
+                                <th style="color:#fff;" class="text-center">Precio</th>
+                                <th style="color:#fff;" class="text-center">Acciones</th>
+                            </thead>
 
-                                <div class="row">
-                                    <div class="col-6"><label>Acciones:</label></div>
-                                    < <div class="row action-buttons">
-                                        @can('editar-materias')
-                                        <a href="{{ route('materias.edit', $materia->id) }}" class="btn btn-warning btn-mobile">
+                            <tbody>
+                                @foreach ($materiaprimas as $materiaprima)
+                                <tr>
+                                    <td class="text-center">{{ $materiaprima->nombre }}</td>
+                                    <td class="text-center">{{ $materiaprima->descripcion }}</td>
+                                    <td class="text-center">{{ $materiaprima->nombreproveedor }}</td>
+                                    <td class="text-center">{{ $materiaprima->cantidad }}</td>
+                                    <td class="text-center">{{ $materiaprima->precio }}</td>
+                                    <td class="text-center">
+                                        @can('editar-materiaprimas')
+                                        <a href="{{ route('materiaprimas.edit', $materiaprima->id_materiaprima) }}"
+                                            class="btn btn-warning mr-1 css-button-sliding-to-left--yellow">
                                             <i class="fas fa-edit"></i>
+                                            Editar
                                         </a>
                                         @endcan
-                                        @can('eliminar-materias')
-                                            <button type="button" class="btn btn-danger" 
-                                                    onclick="{{ $materia->grupos_count > 0 ? 'mostrarMensaje()' : 'confirmarEliminacion(' . $materia->id . ')' }}" 
-                                                    title="{{ $materia->grupos_count > 0 ? 'No se puede eliminar porque hay más de un grupo ocupándolo' : '' }}"
-                                                    {{ $materia->grupos_count > 0 ? 'disabled' : '' }}>
-                                                <i class="fas fa-trash-alt"></i>
-                                                Eliminar
-                                            </button>
-                                            <form id="eliminar-form-{{ $materia->id }}" action="{{ route('materias.destroy', $materia->id) }}" method="POST" class="d-none">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
+                                        @can('borrar-materiaprimas')
+                                        <button type="button" class="btn btn-danger css-button-sliding-to-left--red"
+                                            onclick="confirmarEliminacion({{ $materiaprima->id_materiaprima }})">
+                                            <i class="fas fa-trash-alt"></i>
+                                            Eliminar
+                                        </button>
+                                        <form id="eliminar-form-{{ $materiaprima->id_materiaprima }}"
+                                            action="{{ route('materiaprimas.destroy', $materiaprima->id_materiaprima) }}"
+                                            method="POST" class="d-none">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
                                         @endcan
-                                    </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        @foreach ($materiaprimas as $materiaprima)
+                        <div class="mobile-card d-lg-none">
+                            <div class="row">
+                                <div class="col-6"><label>Nombre:</label></div>
+                                <div class="col-6">{{ $materiaprima->nombre }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6"><label>Descripcion:</label></div>
+                                <div class="col-6">{{ $materiaprima->descripcion }}</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nombreproveedor" class="form-label">Nombre del Proveedor</label>
+                                <input type="text" name="nombreproveedor" class="form-control"
+                                    value="{{ old('nombreproveedor', $materiaprima->nombreproveedor ?? '') }}">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6"><label>Cantidad:</label></div>
+                                <div class="col-6">{{ $materiaprima->cantidad }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6"><label>Precio:</label></div>
+                                <div class="col-6">{{ $materiaprima->precio }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6"><label>Acciones:</label></div>
+                                <div class="row action-buttons">
+                                    @can('editar-materiaprima')
+                                    <a href="{{ route('materiaprimas.edit', $materiaprima->id_materiaprima) }}"
+                                        class="btn btn-warning mr-1 css-button-sliding-to-left--yellow">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+                                    @endcan
+                                    @can('borrar-materiaprima')
+                                    <form action="{{ route('materiaprimas.destroy', $materiaprima->id_materiaprima) }}"
+                                        method="POST" class="d-inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-danger css-button-sliding-to-left--red"
+                                            onclick="return confirm('¿Estás seguro de eliminar este ingrediente?')">
+                                            <i class="fas fa-trash-alt"></i> Eliminar
+                                        </button>
+                                    </form>
+                                    @endcan
                                 </div>
                             </div>
-                            @endforeach
-
-
-
                         </div>
+                        @endforeach
+
+
+                        <!-- Ubicamos la paginación a la derecha -->
                         <div class="pagination justify-content-end">
-                            {!! $materias->links() !!}
+                            {!! $materiaprimas->links() !!}
                         </div>
                     </div>
                 </div>
@@ -506,7 +603,6 @@
         </div>
     </div>
 </section>
-
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <!-- DATATABLES -->
@@ -516,28 +612,41 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    new DataTable('#miTabla2', {
-        lengthMenu: [
-            [2, 5, 10, 15, 50],
-            [2, 5, 10, 15, 50]
-        ],
-        columns: [
-            { data: 'clave', title: 'Clave' },
-            { data: 'nombre', title: 'Nombre' },
-            { data: 'creditos', title: 'Créditos' },
-            { data: 'grupos_count', title: 'Grupos' },
-            { data: 'Acciones', title: 'Acciones', orderable: false }
-        ],
-        language: {
-            url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
-            search: "_INPUT_",
-            searchPlaceholder: "Buscar...",
-            lengthMenu: "Mostrar registros _MENU_ "
+new DataTable('#miTabla2', {
+    lengthMenu: [
+        [2, 5, 10, 15, 50],
+        [2, 5, 10, 15, 50]
+    ],
+    columns: [{
+            nombre: 'Nombre'
         },
-        dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-        pageLength: 10
-    });
-    function confirmarEliminacion(materiaId) {
+        {
+            descripcion: 'Descripcion'
+        },
+        {
+            descripcion: 'nombreproveedor'
+        },
+        {
+            cantidad: 'Cantidad'
+        },
+        {
+            precio: 'Precio'
+        },
+        {
+            Acciones: 'Acciones'
+        },
+    ],
+    language: {
+        url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
+        search: "_INPUT_",
+        searchPlaceholder: "Buscar...",
+        lengthMenu: "Mostrar registros _MENU_ "
+    },
+    dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+    pageLength: 10
+});
+
+function confirmarEliminacion(id_materiaprima) {
     Swal.fire({
         title: '¿Estás seguro?',
         text: "¡No podrás revertir esto!",
@@ -548,25 +657,17 @@
         confirmButtonText: 'Sí, eliminarlo'
     }).then((result) => {
         if (result.isConfirmed) {
-            document.getElementById('eliminar-form-' + materiaId).submit();
+            document.getElementById('eliminar-form-' + id_materiaprima).submit();
             Swal.fire({
                 title: 'Eliminado!',
-                text: 'La materia ha sido eliminado correctamente.',
+                text: 'El ingrediente ha sido eliminado correctamente.',
                 icon: 'success',
                 timer: 4000, // Duración en milisegundos
                 showConfirmButton: false
             });
         }
     });
-    function mostrarMensaje() {
-        Swal.fire({
-            title: 'No se puede eliminar',
-            text: 'No se puede eliminar esta materia porque hay más de un grupo ocupándola.',
-            icon: 'info',
-            confirmButtonText: 'Entendido'
-        });
-    }
 }
 </script>
-}}
+
 @endsection

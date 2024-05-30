@@ -17,7 +17,7 @@ class Puntoventa extends Model
 
     // Especifica qué campos pueden ser asignados masivamente
     protected $fillable = [
-        'id_punventa',
+        'id_venta',
         'descripcion',
         
     ];
