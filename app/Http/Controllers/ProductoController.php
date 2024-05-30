@@ -121,7 +121,7 @@ class ProductoController extends Controller
     ]);
 
     $producto = Producto::findOrFail($id);
-
+    
     // Validar si la cantidad nueva es menor que la actual
     if ($request->cantidad < $producto->cantidad) {
         return redirect()->back()->withErrors(['error' => 'La nueva cantidad no puede ser menor que la cantidad actual.'])->withInput();

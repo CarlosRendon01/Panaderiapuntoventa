@@ -30,7 +30,7 @@
                         </div>
                         @endif
 
-                        <form action="{{ route('materias.store') }}" method="POST" class="my-4">
+                        <form action="{{ route('materias.store') }}" method="POST" enctype="multipart/form-data" class="my-4">
                             @csrf
 
                             <div class="form-group floating-label">
@@ -73,9 +73,9 @@
                             </div>
 
                             <div class="form-group">
-    <label for="imagen">Imagen</label>
-    <input type="file" name="imagen" class="form-control-file" id="imagen">
-</div>
+                                <label for="imagen">Imagen (Opcional)</label>
+                                <input type="file" name="imagen" class="form-control-file" id="imagen">
+                            </div>
 
                             <div class="form-group floating-label">
                                 <label for="cantidad">Cantidad</label>
@@ -104,7 +104,7 @@
                                 @enderror
                             </div>
 
-                            
+
 
 
                             <div class="text-center">

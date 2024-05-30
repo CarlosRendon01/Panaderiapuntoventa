@@ -499,49 +499,59 @@
                         </div>
 
                         <table class="table table-striped mt-2" id="miTabla2">
-                            <thead style="background-color:#AF8F6F">
-                                <th style="color:#fff;" class="text-center">Nombre</th>
-                                <th style="color:#fff;" class="text-center">Descripcion</th>
-                                <th style="color:#fff;" class="text-center">Nombre Proveedor</th>
-                                <th style="color:#fff;" class="text-center">Cantidad</th>
-                                <th style="color:#fff;" class="text-center">Precio</th>
-                                <th style="color:#fff;" class="text-center">Acciones</th>
-                            </thead>
+    <thead style="background-color:#AF8F6F; text-align: center;">
+        <tr>
+            <th style="color:#fff;">Imagen</th>
+            <th style="color:#fff;">Nombre</th>
+            <th style="color:#fff;">Descripción</th>
+            <th style="color:#fff;">Nombre Proveedor</th>
+            <th style="color:#fff;">Cantidad</th>
+            <th style="color:#fff;">Precio</th>
+            <th style="color:#fff;">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($materias as $materia)
+        <tr>
+            <td style="text-align: center;">
+                <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
+                    @if($materia->imagen_url)
+                    <img src="{{ asset('storage/' . $materia->imagen_url) }}" class="img-fluid"
+                        style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    @else
+                    <img src="https://via.placeholder.com/150" class="img-fluid"
+                        style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Placeholder Image">
+                    @endif
+                </div>
+            </td>
+            <td style="text-align: center;">{{ $materia->nombre }}</td>
+            <td style="text-align: center;">{{ $materia->descripcion }}</td>
+            <td style="text-align: center;">{{ $materia->proveedor }}</td>
+            <td style="text-align: center;">{{ $materia->cantidad }}</td>
+            <td style="text-align: center;">{{ $materia->precio }}</td>
+            <td style="text-align: center;">
+                @can('editar-materias')
+                <a href="{{ route('materias.edit', $materia->id) }}" class="btn btn-warning mr-1 css-button-sliding-to-left--yellow">
+                    <i class="fas fa-edit"></i> Editar
+                </a>
+                @endcan
+                @can('borrar-materias')
+                <button type="button" class="btn btn-danger css-button-sliding-to-left--red" onclick="confirmarEliminacion({{ $materia->id }})">
+                    <i class="fas fa-trash-alt"></i> Eliminar
+                </button>
+                <form id="eliminar-form-{{ $materia->id }}" action="{{ route('materias.destroy', $materia->id) }}" method="POST" class="d-none">
+                    @csrf
+                    @method('DELETE')
+                </form>
+                @endcan
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 
-                            <tbody>
-                                @foreach ($materias as $materia)
-                                <tr>
-                                    <td class="text-center">{{ $materia->nombre }}</td>
-                                    <td class="text-center">{{ $materia->descripcion }}</td>
-                                    <td class="text-center">{{ $materia->proveedor }}</td>
-                                    <td class="text-center">{{ $materia->cantidad }}</td>
-                                    <td class="text-center">{{ $materia->precio }}</td>
-                                    <td class="text-center">
-                                        @can('editar-materias')
-                                        <a href="{{ route('materias.edit', $materia->id) }}"
-                                            class="btn btn-warning mr-1 css-button-sliding-to-left--yellow">
-                                            <i class="fas fa-edit"></i>
-                                            Editar
-                                        </a>
-                                        @endcan
-                                        @can('borrar-materias')
-                                        <button type="button" class="btn btn-danger css-button-sliding-to-left--red"
-                                            onclick="confirmarEliminacion({{ $materia->id }})">
-                                            <i class="fas fa-trash-alt"></i>
-                                            Eliminar
-                                        </button>
-                                        <form id="eliminar-form-{{ $materia->id }}"
-                                            action="{{ route('materias.destroy', $materia->id) }}"
-                                            method="POST" class="d-none">
-                                            @csrf
-                                            @method('DELETE')
-                                        </form>
-                                        @endcan
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+
+
 
                         @foreach ($materias as $materia)
                         <div class="mobile-card d-lg-none">
@@ -575,8 +585,8 @@
                                     </a>
                                     @endcan
                                     @can('borrar-materia')
-                                    <form action="{{ route('materias.destroy', $materia->id) }}"
-                                        method="POST" class="d-inline-block">
+                                    <form action="{{ route('materias.destroy', $materia->id) }}" method="POST"
+                                        class="d-inline-block">
                                         @csrf
                                         @method('DELETE')
                                         <button type="button" class="btn btn-danger css-button-sliding-to-left--red"
@@ -613,6 +623,9 @@ new DataTable('#miTabla2', {
         [2, 5, 10, 15, 50]
     ],
     columns: [{
+            imagen: 'imagen'
+        },
+        {
             nombre: 'Nombre'
         },
         {
@@ -666,4 +679,3 @@ function confirmarEliminacion(id) {
 </script>
 
 @endsection
-
