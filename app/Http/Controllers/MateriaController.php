@@ -21,26 +21,47 @@ class MateriaController extends Controller
         return view('materias.crear');
     }
 
-    // Guardar una nueva materia en la base de datos
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'descripcion' => 'required|string',
-            'proveedor' => 'required|string|max:255',
-            'cantidad' => 'required|numeric',
-            'precio' => 'required|numeric'
-        ]);
+   // Guardar una nueva materia en la base de datos
+   public function store(Request $request)
+   {
+       // Validación
+       $request->validate([
+           'nombre' => 'required|string|max:255',
+           'descripcion' => 'required|string',
+           'proveedor' => 'required|string|max:255',
+           'cantidad' => 'required|numeric|min:0',  // Asegura que no sean negativos
+           'precio' => 'required|numeric|min:0',   // Asegura que no sean negativos
+           'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+       ]);
+   
+       // Manejo de la imagen
+       $imagenUrl = null;
+       if ($request->hasFile('imagen')) {
+           $imagen = $request->file('imagen');
+           $imagenUrl = $imagen->store('imagenes_materia', 'public');
+       }
+   
+       DB::beginTransaction();
+       try {
+           // Crear la materia directamente especificando cada campo
+           $materia = Materia::create([
+               'nombre' => $request->nombre,
+               'descripcion' => $request->descripcion,
+               'proveedor' => $request->proveedor,
+               'cantidad' => $request->cantidad,
+               'precio' => $request->precio,
+               'imagen_url' => $imagenUrl
+           ]);
+   
+           DB::commit();
+           return redirect()->route('materias.index')->with('success', 'Materia creada exitosamente.');
+       } catch (\Exception $e) {
+           DB::rollback();
+           return back()->withErrors(['error' => 'Ocurrió un error al crear la materia: ' . $e->getMessage()])->withInput();
+       }
+   }
+   
 
-        try {
-            Materia::create($validatedData);
-            return redirect()->route('materias.index')
-                             ->with('success', 'Materia creada exitosamente.');
-        } catch (\Exception $e) {
-            Log::error('Error creando materia: ' . $e->getMessage());
-            return redirect()->back()->withErrors(['error' => 'Error creando materia: ' . $e->getMessage()]);
-        }
-    }
 
     // Mostrar una materia específica
     public function show(Materia $materia)

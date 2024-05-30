@@ -21,11 +21,12 @@ class Materia extends Model
         'proveedor',
         'cantidad',
         'precio',
+        'imagen_url',
     ];
 
     // Define la relación con el modelo Producto
     public function productos()
-    {
-        return $this->belongsToMany(Producto::class, 'pro_materia', 'id_materiaprima', 'id_producto')->withPivot('cantidad');
-    }
+{
+    return $this->belongsToMany(Producto::class, 'pro_materia', 'materia_id', 'producto_id')->withPivot('cantidad');
+}
 }

@@ -18,7 +18,7 @@ class ProductosTableSeeder extends Seeder
             [
                 'nombre' => 'Pan Tostado',
                 'descripcion' => 'Muy rico',
-                'imagen_url' => 'imagenes_productos/pan-blanco.png',
+                'imagen_url' => 'imagenes_productos/WhatsApp Image 2024-05-30 at 2.31.09 AM.jpeg',
                 'precio' => 10.00,
                 'cantidad' => 100,
                 'created_at' => now(),

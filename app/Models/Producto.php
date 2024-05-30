@@ -33,9 +33,10 @@ class Producto extends Model
 
     // Define la relación con el modelo Materia
     public function materias()
-    {
-        return $this->belongsToMany(Materia::class, 'pro_materia', 'producto_id', 'materia_id')->withPivot('cantidad');
-    }
+{
+    return $this->belongsToMany(Materia::class, 'pro_materia', 'producto_id', 'materia_id')->withPivot('cantidad');
+}
+
 
     // Define la relación con el modelo Venta
     public function ventas()
