@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('usuarios', UsuarioController::class);
     Route::resource('productos', ProductoController::class); 
     Route::resource('materias', MateriaController::class);
+    
     // routes/web.php
     Route::resource('ventas', VentaController::class);
 
